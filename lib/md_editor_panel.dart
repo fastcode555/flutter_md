@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_md/widgets/auto_md_editor.dart';
 
 /// @date 6/9/22
 /// describe: 编辑器页面
@@ -12,19 +13,26 @@ class MdEditorPanel extends StatefulWidget {
 }
 
 class _MdEditorPanelState extends State<MdEditorPanel> {
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: TextField(
-        maxLines: null,
-        controller: widget.controller,
-        decoration: const InputDecoration(
-          focusedBorder: InputBorder.none,
-          border: InputBorder.none,
-          enabledBorder: InputBorder.none,
-        ),
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (_, constraints) {
+          return AutoMdEditor(
+            controller: widget.controller,
+            focusNode: _focusNode,
+            hintWidth: constraints.maxWidth,
+          );
+        },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focusNode.dispose();
   }
 }

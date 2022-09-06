@@ -43,58 +43,57 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RawAutocomplete<String>(
-        onSelected: (s) {
-          print('$s');
-        },
-        optionsViewBuilder: (
-          BuildContext context,
-          AutocompleteOnSelected<String> onSelected,
-          Iterable<String> options,
-        ) {
-          return Align(
-            alignment: Alignment.topLeft,
-            child: Material(
-              elevation: 0.0,
-              child: Container(
-                color: Theme.of(context).cardColor,
-                constraints: BoxConstraints(maxHeight: 360),
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    String text = options.elementAt(index);
-                    return ListTile(
-                      onTap: () {
-                        onSelected.call(text);
-                      },
-                      title: Text(text),
-                    );
-                  },
-                  itemCount: options.length,
-                ),
+    return RawAutocomplete<String>(
+      onSelected: (s) {
+        print('$s');
+      },
+      optionsViewBuilder: (
+        BuildContext context,
+        AutocompleteOnSelected<String> onSelected,
+        Iterable<String> options,
+      ) {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Material(
+            elevation: 0.0,
+            child: Container(
+              color: Theme.of(context).cardColor,
+              constraints: BoxConstraints(maxHeight: 360),
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  String text = options.elementAt(index);
+                  return ListTile(
+                    onTap: () {
+                      onSelected.call(text);
+                    },
+                    title: Text(text),
+                  );
+                },
+                itemCount: options.length,
               ),
             ),
-          );
-        },
-        optionsBuilder: (TextEditingValue textEditingValue) {
-          if (textEditingValue.text.isEmpty) return [];
-          String text = textEditingValue.text;
-          if (text.contains(' ')) {
-            text = text.split(' ').last;
-          }
-          return options.where((element) => RegExp('(.*)$text(.*)', caseSensitive: false).hasMatch(element)).toList();
-        },
-        fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode,
-            VoidCallback onFieldSubmitted) {
-          return TextFormField(
-            controller: textEditingController,
-            focusNode: focusNode,
-            onFieldSubmitted: (String value) {
-              onFieldSubmitted();
-            },
-          );
-        },
-      ),
+          ),
+        );
+      },
+      optionsBuilder: (TextEditingValue textEditingValue) {
+        if (textEditingValue.text.isEmpty) return [];
+        String text = textEditingValue.text;
+        if (text.contains(' ')) {
+          text = text.split(' ').last;
+        }
+        return options.where((element) => RegExp('(.*)$text(.*)', caseSensitive: false).hasMatch(element)).toList();
+      },
+      fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode,
+          VoidCallback onFieldSubmitted) {
+        return TextFormField(
+          controller: textEditingController,
+          focusNode: focusNode,
+          maxLines: null,
+          onFieldSubmitted: (String value) {
+            onFieldSubmitted();
+          },
+        );
+      },
     );
   }
 }

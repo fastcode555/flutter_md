@@ -1,0 +1,12 @@
+[
+  {
+    "template": "#",
+    "desc": "H1标题",
+    "keyword": "#"
+  },
+  {
+    "template": "######",
+    "desc": "H6标题",
+    "keyword": "h6"
+  }
+]

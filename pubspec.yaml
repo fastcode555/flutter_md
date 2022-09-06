@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   markdown_office:
     path: ../../githubs/flutter_yongwen/thrid_party/markdown_office
+  json2dart_dbffi:
 
 dev_dependencies:
   flutter_test:
