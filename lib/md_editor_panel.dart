@@ -15,7 +15,7 @@ class _MdEditorPanelState extends State<MdEditorPanel> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(
         maxLines: null,
         controller: widget.controller,
