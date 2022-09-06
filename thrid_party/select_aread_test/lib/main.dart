@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    //结论SelectionArea只能作用于Text或者Text.rich，对于RichText跟SelectableText是无效的
     return Scaffold(
       body: SelectionArea(
         child: Column(
