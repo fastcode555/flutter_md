@@ -14,9 +14,17 @@ class MdEditorPanel extends StatefulWidget {
 class _MdEditorPanelState extends State<MdEditorPanel> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      maxLines: null,
-      controller: widget.controller,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: TextField(
+        maxLines: null,
+        controller: widget.controller,
+        decoration: const InputDecoration(
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+        ),
+      ),
     );
   }
 }
