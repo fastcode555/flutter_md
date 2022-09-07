@@ -73,7 +73,7 @@ class AutoMdEditor extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     String text = options.elementAt(index);
                     return InkWell(
-                      onTap: () => onSelected.call(text),
+                      onTap: () => onSelected.call(controller.text + text),
                       child: Container(
                         height: itemHeight,
                         alignment: Alignment.centerLeft,
@@ -94,12 +94,13 @@ class AutoMdEditor extends StatelessWidget {
 
   ///获取符合筛选条件的备选项
   FutureOr<Iterable<String>> _optionsBuilder(TextEditingValue textEditingValue) {
-    if (textEditingValue.text.isEmpty) return [];
     String text = textEditingValue.text;
+    if (text.isEmpty || text.trim().isEmpty) return [];
+    text = text.split("\n").last;
     if (text.contains(' ')) {
       text = text.split(' ').last;
     }
-    return _options.where((element) => RegExp('(.*)$text(.*)', caseSensitive: false).hasMatch(element)).toList();
+    return _options.where((e) => _filterValue(e, text)).toList();
   }
 
   ///创建的文本编辑框
@@ -115,5 +116,9 @@ class AutoMdEditor extends StatelessWidget {
         errorBorder: InputBorder.none,
       ),
     );
+  }
+
+  bool _filterValue(String element, String text) {
+    return element != text && element.toLowerCase().startsWith(text.toLowerCase());
   }
 }
