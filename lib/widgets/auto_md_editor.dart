@@ -45,19 +45,17 @@ class AutoMdEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawAutocomplete<String>(
-      onSelected: (s) {
-        print('$s');
-      },
+      onSelected: (s) {},
       textEditingController: controller,
       focusNode: focusNode,
-      optionsViewBuilder: _optionsViewBuilder,
+      optionsViewBuilder: (_, onSelected, options) => _optionsViewBuilder(_, onSelected, options, context),
       optionsBuilder: _optionsBuilder,
       fieldViewBuilder: _fieldViewBuilder,
     );
   }
 
   ///构建提示的文本
-  Widget _optionsViewBuilder(_, onSelected, options) {
+  Widget _optionsViewBuilder(_, onSelected, options, BuildContext context) {
     return Stack(
       children: [
         Positioned(
@@ -69,20 +67,23 @@ class AutoMdEditor extends StatelessWidget {
               child: Container(
                 color: Colors.red,
                 height: (options.length > maxShowCount ? maxShowCount : options.length) * itemHeight,
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    String text = options.elementAt(index);
-                    return InkWell(
-                      onTap: () => onSelected.call(controller.text + text),
-                      child: Container(
-                        height: itemHeight,
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(text),
-                      ),
-                    );
-                  },
-                  itemCount: options.length,
+                child: MediaQuery.removePadding(
+                  context: context,
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, int index) {
+                      String text = options.elementAt(index);
+                      return InkWell(
+                        onTap: () => onSelected.call(controller.text + text),
+                        child: Container(
+                          height: itemHeight,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(text),
+                        ),
+                      );
+                    },
+                    itemCount: options.length,
+                  ),
                 ),
               ),
             ),
@@ -96,10 +97,15 @@ class AutoMdEditor extends StatelessWidget {
   FutureOr<Iterable<String>> _optionsBuilder(TextEditingValue textEditingValue) {
     String text = textEditingValue.text;
     if (text.isEmpty || text.trim().isEmpty) return [];
+    int start = controller.selection.start;
+    int end = controller.selection.end;
+    if (start != end) return [];
+    text = text.substring(0, start);
     text = text.split("\n").last;
     if (text.contains(' ')) {
       text = text.split(' ').last;
     }
+    if (text.isEmpty) return [];
     return _options.where((e) => _filterValue(e, text)).toList();
   }
 

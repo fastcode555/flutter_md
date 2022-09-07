@@ -18,19 +18,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ResizableFulWidget(
-      visibleNotifier: _notifier,
-      builder: (_) {
-        return [
-          MdEditorPanel(controller: _controller),
-          ValueListenableBuilder<TextEditingValue>(
-            valueListenable: _controller,
-            builder: (_, value, __) {
-              return MarkdownOffice(data: _controller.text);
-            },
-          ),
-        ];
-      },
+    return Scaffold(
+      body: ResizableFulWidget(
+        visibleNotifier: _notifier,
+        builder: (_) {
+          return [
+            MdEditorPanel(controller: _controller),
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _controller,
+              builder: (_, value, __) {
+                return MarkdownOffice(data: _controller.text);
+              },
+            ),
+          ];
+        },
+      ),
     );
   }
 }

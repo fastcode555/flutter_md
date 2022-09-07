@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_md/base/common_config_imp.dart';
+import 'package:flutter_md/themes.dart';
 
 import 'home_page.dart';
 
@@ -15,11 +16,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const Material(
-        child: HomePage(),
-      ),
+      theme: Themes.theme(),
+      home: const Material(child: HomePage()),
     );
   }
 }
