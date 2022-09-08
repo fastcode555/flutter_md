@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: ResizableFulWidget(
         visibleNotifier: _notifier,
+        percentages: const [0.5, 0.5],
         builder: (_) {
           return [
             MdEditorPanel(controller: _controller),

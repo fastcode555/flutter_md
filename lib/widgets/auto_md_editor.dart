@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'auto_complete_ex.dart';
+
 /// @date 6/9/22
 /// describe:
 List<String> _options = [
@@ -44,7 +46,7 @@ class AutoMdEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawAutocomplete<String>(
+    return AutoCompleteEx<String>(
       onSelected: (s) {},
       textEditingController: controller,
       focusNode: focusNode,
@@ -65,7 +67,10 @@ class AutoMdEditor extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: Container(
-                color: Colors.red,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 height: (options.length > maxShowCount ? maxShowCount : options.length) * itemHeight,
                 child: MediaQuery.removePadding(
                   context: context,
@@ -111,15 +116,18 @@ class AutoMdEditor extends StatelessWidget {
 
   ///创建的文本编辑框
   Widget _fieldViewBuilder(_, textEditingController, focusNode, onFieldSubmitted) {
-    return TextField(
-      controller: textEditingController,
-      focusNode: focusNode,
-      maxLines: null,
-      onSubmitted: (String value) => onFieldSubmitted(),
-      decoration: const InputDecoration(
-        enabledBorder: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: TextField(
+        controller: textEditingController,
+        focusNode: focusNode,
+        maxLines: null,
+        onSubmitted: (String value) => onFieldSubmitted(),
+        decoration: const InputDecoration(
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+        ),
       ),
     );
   }
