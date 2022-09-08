@@ -20,10 +20,13 @@ class _MdEditorPanelState extends State<MdEditorPanel> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (_, constraints) {
-          return AutoMdEditor(
-            controller: widget.controller,
-            focusNode: _focusNode,
-            hintWidth: constraints.maxWidth,
+          return SingleChildScrollView(
+            child: AutoMdEditor(
+              controller: widget.controller,
+              focusNode: _focusNode,
+              hintWidth: constraints.maxWidth,
+              hintHeight: constraints.maxHeight,
+            ),
           );
         },
       ),

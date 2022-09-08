@@ -217,7 +217,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
           return CompositedTransformFollower(
             link: _optionsLayerLink,
             showWhenUnlinked: false,
-            targetAnchor: Alignment.bottomLeft,
+            targetAnchor: Alignment.topLeft,
             child: AutocompleteHighlightedOption(
               highlightIndexNotifier: _highlightedOptionIndex,
               child: Builder(
