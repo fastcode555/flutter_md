@@ -216,7 +216,6 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
     if (_shouldShowOptions) {
       final OverlayEntry newFloatingOptions = OverlayEntry(
         builder: (BuildContext context) {
-          print("重新构建面板 CompositedTransformFollower");
           return CompositedTransformFollower(
             link: _optionsLayerLink,
             showWhenUnlinked: false,
@@ -226,7 +225,6 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
               highlightIndexNotifier: _highlightedOptionIndex,
               child: Builder(
                 builder: (BuildContext context) {
-                  print("重新构建面板 context 面板");
                   return widget.optionsViewBuilder(context, _select, _options);
                 },
               ),

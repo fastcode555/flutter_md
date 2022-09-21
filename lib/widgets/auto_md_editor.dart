@@ -60,6 +60,7 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
   ///面板的大小
   double _width = 0.0;
 
+  ///提示选项生成的依据
   String _tipText = "";
 
   @override
@@ -123,7 +124,7 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
                       child: Container(
                         height: widget.itemHeight,
                         alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: EdgeInsets.symmetric(horizontal: widget.padding),
                         child: Text(text),
                       ),
                     );
