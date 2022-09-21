@@ -96,7 +96,6 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
       children: [
         SizedBox(
           width: _width,
-          height: 200,
           child: Material(
             color: Colors.transparent,
             child: Container(
