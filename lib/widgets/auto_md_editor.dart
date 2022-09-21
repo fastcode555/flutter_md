@@ -45,7 +45,7 @@ class AutoMdEditor extends StatefulWidget {
     this.hintWidth = 300,
     this.hintHeight = 300,
     this.padding = 16.0,
-    this.style = const TextStyle(),
+    this.style = const TextStyle(height: 1.1),
     Key? key,
   }) : super(key: key);
 
@@ -84,6 +84,7 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
       optionsViewBuilder: (_, onSelected, options) => _optionsViewBuilder(_, onSelected, options, context),
       optionsBuilder: _optionsBuilder,
       fieldViewBuilder: _fieldViewBuilder,
+      offsetBuilder: _offsetBuilder,
     );
   }
 
@@ -91,37 +92,33 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
   Widget _optionsViewBuilder(_, onSelected, options, BuildContext context) {
     return Stack(
       children: [
-        Positioned(
-          left: _getLeft(),
-          top: _getTop(),
-          child: SizedBox(
-            width: _width,
-            child: Material(
-              color: Colors.transparent,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: context.primaryColor.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                height:
-                    (options.length > widget.maxShowCount ? widget.maxShowCount : options.length) * widget.itemHeight,
-                child: MediaQuery.removePadding(
-                  context: context,
-                  child: ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      String text = options.elementAt(index);
-                      return InkWell(
-                        onTap: () => onSelected.call(widget.controller.text + text),
-                        child: Container(
-                          height: widget.itemHeight,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(text),
-                        ),
-                      );
-                    },
-                    itemCount: options.length,
-                  ),
+        SizedBox(
+          width: _width,
+          height: 200,
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: context.primaryColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              height: (options.length > widget.maxShowCount ? widget.maxShowCount : options.length) * widget.itemHeight,
+              child: MediaQuery.removePadding(
+                context: context,
+                child: ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    String text = options.elementAt(index);
+                    return InkWell(
+                      onTap: () => onSelected.call(widget.controller.text + text),
+                      child: Container(
+                        height: widget.itemHeight,
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(text),
+                      ),
+                    );
+                  },
+                  itemCount: options.length,
                 ),
               ),
             ),
@@ -154,6 +151,7 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
       child: TextField(
         controller: textEditingController,
         focusNode: focusNode,
+        scrollPadding: EdgeInsets.zero,
         style: widget.style,
         maxLines: null,
         onSubmitted: (String value) => onFieldSubmitted(),
@@ -170,31 +168,20 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
     return element != text && element.toLowerCase().startsWith(text.toLowerCase());
   }
 
-  ///计算离顶部的距离
-  double _getTop() {
+  Offset _offsetBuilder() {
     String text = widget.controller.text;
-    if (text.isEmpty || text.trim().isEmpty) return _lineHeight;
-    int start = widget.controller.selection.start;
-    int end = widget.controller.selection.end;
-    if (start != end) return _lineHeight;
-    text = text.substring(0, start);
-    double height = text.paintHeightWithTextStyle(widget.style, maxWidth: _width);
-    if (height > widget.hintHeight / 2) {
-      return height + _lineHeight * 2;
+    TextSelection selection = widget.controller.selection;
+    int start = selection.start;
+    int end = selection.end;
+    if (start == end) {
+      String tail = text.substring(end, text.length);
+      double height = tail.paintHeightWithTextStyle(widget.style, maxWidth: _width);
+      print("计算到高度$height");
+      return Offset(
+        widget.padding,
+        height < _lineHeight ? 0 : -height + _lineHeight - ((tail.split('\n').length) * _lineHeight * 0.1),
+      );
     }
-    return height + _lineHeight;
-  }
-
-  ///计算离左边的距离
-  double _getLeft() {
-    String text = widget.controller.text;
-    int start = widget.controller.selection.start;
-    int end = widget.controller.selection.end;
-    if (start != end) return widget.padding;
-    text = text.substring(0, start);
-    text = text.split("\n").last;
-    double width = text.paintWidthWithTextStyle(widget.style);
-    double left = width % _width;
-    return left + widget.padding;
+    return Offset.zero;
   }
 }

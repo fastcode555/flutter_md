@@ -39,6 +39,7 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
     this.onSelected,
     this.textEditingController,
     this.initialValue,
+    required this.offsetBuilder,
   })  : assert(displayStringForOption != null),
         assert(
           fieldViewBuilder != null || (key != null && focusNode != null && textEditingController != null),
@@ -55,6 +56,7 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
   final AutocompleteFieldViewBuilder? fieldViewBuilder;
   final FocusNode? focusNode;
   final AutocompleteOptionsViewBuilder<T> optionsViewBuilder;
+  final Offset Function() offsetBuilder;
 
   final AutocompleteOptionToString<T> displayStringForOption;
 
@@ -214,14 +216,17 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
     if (_shouldShowOptions) {
       final OverlayEntry newFloatingOptions = OverlayEntry(
         builder: (BuildContext context) {
+          print("重新构建面板 CompositedTransformFollower");
           return CompositedTransformFollower(
             link: _optionsLayerLink,
             showWhenUnlinked: false,
-            targetAnchor: Alignment.topLeft,
+            offset: widget.offsetBuilder(),
+            targetAnchor: Alignment.bottomLeft,
             child: AutocompleteHighlightedOption(
               highlightIndexNotifier: _highlightedOptionIndex,
               child: Builder(
                 builder: (BuildContext context) {
+                  print("重新构建面板 context 面板");
                   return widget.optionsViewBuilder(context, _select, _options);
                 },
               ),
