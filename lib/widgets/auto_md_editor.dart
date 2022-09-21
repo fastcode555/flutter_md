@@ -60,6 +60,8 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
   ///面板的大小
   double _width = 0.0;
 
+  String _tipText = "";
+
   @override
   void initState() {
     super.initState();
@@ -109,7 +111,16 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
                   itemBuilder: (BuildContext context, int index) {
                     String text = options.elementAt(index);
                     return InkWell(
-                      onTap: () => onSelected.call(widget.controller.text + text),
+                      onTap: () {
+                        String content = widget.controller.text;
+                        TextSelection selection = widget.controller.selection;
+                        int start = selection.start;
+                        String header = content.substring(0, start);
+                        String tail = content.substring(start, content.length);
+                        header = header.replaceRange(start - _tipText.length, start, text);
+                        widget.controller.text = "$header$tail";
+                        widget.controller.selection = createTextSelection(header);
+                      },
                       child: Container(
                         height: widget.itemHeight,
                         alignment: Alignment.centerLeft,
@@ -141,6 +152,7 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
       text = text.split(' ').last;
     }
     if (text.isEmpty) return [];
+    _tipText = text;
     return _options.where((e) => _filterValue(e, text)).toList();
   }
 
@@ -183,5 +195,12 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
       );
     }
     return Offset.zero;
+  }
+
+  ///创建选择到的最后的文本
+  TextSelection createTextSelection(String content) {
+    return TextSelection.fromPosition(
+      TextPosition(affinity: TextAffinity.downstream, offset: content.length),
+    );
   }
 }
