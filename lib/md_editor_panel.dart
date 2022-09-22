@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_md/model/tip_model.dart';
 import 'package:flutter_md/widgets/auto_md_editor.dart';
 
 /// @date 6/9/22
@@ -26,6 +27,7 @@ class _MdEditorPanelState extends State<MdEditorPanel> {
               focusNode: _focusNode,
               hintWidth: constraints.maxWidth,
               hintHeight: constraints.maxHeight,
+              options: TipModel.defaults,
             ),
           );
         },
