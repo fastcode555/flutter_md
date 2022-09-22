@@ -56,7 +56,10 @@ class _MultilineEditorState extends State<MultilineEditor> with AutomaticKeepAli
 
     //读取到数据
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _controller.text = widget.content ?? widget.file?.readAsStringSync() ?? '';
+      String content = widget.content ?? widget.file?.readAsStringSync() ?? '';
+      if (content.isNotEmpty) {
+        _controller.text = content;
+      }
       _lastData = _controller.text;
     });
 
@@ -145,7 +148,7 @@ class _MultilineEditorState extends State<MultilineEditor> with AutomaticKeepAli
           _controller.selection = EditUtils.createTextSelection(header);
         }
       } else if (lastContent.length >= 3) {
-        _addSameAtHistLine(header, tail, results);
+        _addSameAtThisLine(header, tail, results);
       }
     }
   }
@@ -276,7 +279,7 @@ class _MultilineEditorState extends State<MultilineEditor> with AutomaticKeepAli
   }
 
   ///在本行根据规则添加相似的内容
-  void _addSameAtHistLine(String header, String tail, List<String> results) {
+  void _addSameAtThisLine(String header, String tail, List<String> results) {
     String line = results.last;
     bool isMatch = EditUtils.matchMath(line);
     bool hasResult = EditUtils.matchMathResult(line);

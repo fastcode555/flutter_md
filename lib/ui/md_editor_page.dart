@@ -4,15 +4,14 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
 import '../model/edit_action_model.dart';
-import 'editor_action_bar.dart';
-import 'editor_panel.dart';
+import '../widgets/editor_action_bar.dart';
+import '../widgets/editor_panel.dart';
 import 'markdown_page.dart';
 
 class MdEditorPage extends StatefulWidget {
   static const String routeName = "/widgets/md_editor_page";
-  final File? file;
 
-  const MdEditorPage({this.file, super.key});
+  const MdEditorPage({super.key});
 
   @override
   _MdEditorPageState createState() => _MdEditorPageState();
@@ -30,6 +29,8 @@ class _MdEditorPageState extends State<MdEditorPage> {
 
   ///是否是编辑模式
   bool _isEdit = true;
+
+  File? _file;
 
   @override
   void initState() {
@@ -59,7 +60,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
                   child: SizedBox(
                     height: double.infinity,
                     child: EditorPanel(
-                      file: widget.file,
+                      file: _file,
                       controller: _controller,
                       autofocus: false,
                       notifier: _notifier,
@@ -73,7 +74,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
                 child: ValueListenableBuilder<TextEditingValue>(
                   valueListenable: _controller,
                   builder: (_, data, __) {
-                    return MarkdownPage(file: widget.file, data: _controller.text);
+                    return MarkdownPage(file: _file, data: _controller.text);
                   },
                 ),
               ),
@@ -84,7 +85,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
             children: [
-              Expanded(child: Text(widget.file?.name ?? '')),
+              Expanded(child: Text(_file?.name ?? '')),
               ValueListenableBuilder<String>(
                 valueListenable: _notifier,
                 builder: (_, data, __) {

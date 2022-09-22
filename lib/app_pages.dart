@@ -1,5 +1,5 @@
 import 'package:common/common.dart';
-import 'package:flutter_md/widgets/md_editor_page.dart';
+import 'package:flutter_md/ui/md_editor_page.dart';
 
 class AppPages {
   static const initial = MdEditorPage.routeName;
