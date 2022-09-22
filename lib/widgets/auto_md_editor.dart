@@ -145,7 +145,7 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
     if (text.isEmpty || text.trim().isEmpty) return [];
     int start = widget.controller.selection.start;
     int end = widget.controller.selection.end;
-    if (start != end) return [];
+    if (start != end || start < 0) return [];
     text = text.substring(0, start);
     text = text.split("\n").last;
     if (text.contains(' ')) {
