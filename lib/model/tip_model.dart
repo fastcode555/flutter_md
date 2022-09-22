@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:json2dart_dbffi/json2dart_dbffi.dart';
 import 'package:json2dart_safe/json2dart.dart';
 
-class TipModel with BaseDbModel {
+class TipModel {
   String? template;
   String? keyword;
   String? desc;
