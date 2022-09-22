@@ -4,7 +4,9 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
 import '../model/edit_action_model.dart';
+import '../model/tip_model.dart';
 import '../utils/edit_utils.dart';
+import 'auto_md_editor.dart';
 import 'dialog/insert_image_dialog.dart';
 import 'dialog/insert_link_dialog.dart';
 import 'mutiline_editor.dart';
@@ -52,13 +54,33 @@ class _EditorPanelState extends State<EditorPanel> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ScrollStatusListener(
         metricsChangedListener: _metricsChangedListener,
-        child: MultilineEditor(
-          file: widget.file,
-          scrollController: _scrollController,
-          controller: widget.controller,
-          autofocus: widget.autofocus,
-          focusNode: widget.focusNode,
-          autoEmpty: widget.autoEmpty,
+        child: LayoutBuilder(
+          builder: (_, constraints) {
+            return SingleChildScrollView(
+              controller: _scrollController,
+              child: AutoMdEditor(
+                controller: widget.controller!,
+                focusNode: widget.focusNode!,
+                hintWidth: constraints.maxWidth,
+                hintHeight: constraints.maxHeight,
+                options: TipModel.defaults,
+                fieldViewBuilder: (
+                  BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted,
+                ) {
+                  return MultilineEditor(
+                    file: widget.file,
+                    controller: textEditingController,
+                    autofocus: widget.autofocus,
+                    focusNode: focusNode,
+                    autoEmpty: widget.autoEmpty,
+                  );
+                },
+              ),
+            );
+          },
         ),
       ),
     );

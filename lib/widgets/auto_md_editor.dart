@@ -4,7 +4,7 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
 import '../model/tip_model.dart';
-import 'auto_complete_ex.dart';
+import 'auto_complete_ex.dart' as auto;
 
 /// @date 6/9/22
 /// describe:
@@ -21,6 +21,7 @@ class AutoMdEditor extends StatefulWidget {
 
   ///这个就是展示的选项了
   final List<TipModel> options;
+  final auto.AutocompleteFieldViewBuilder? fieldViewBuilder;
 
   const AutoMdEditor({
     required this.controller,
@@ -31,6 +32,7 @@ class AutoMdEditor extends StatefulWidget {
     this.hintHeight = 300,
     this.padding = 16.0,
     this.options = const [],
+    this.fieldViewBuilder,
     this.style = const TextStyle(height: 1.1),
     Key? key,
   }) : super(key: key);
@@ -69,13 +71,13 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return AutoCompleteEx<TipModel>(
+    return auto.AutoCompleteEx<TipModel>(
       onSelected: (s) {},
       textEditingController: widget.controller,
       focusNode: widget.focusNode,
       optionsViewBuilder: (_, onSelected, options) => _optionsViewBuilder(_, onSelected, options, context),
       optionsBuilder: _optionsBuilder,
-      fieldViewBuilder: _fieldViewBuilder,
+      fieldViewBuilder: widget.fieldViewBuilder ?? _fieldViewBuilder,
       offsetBuilder: _offsetBuilder,
     );
   }
