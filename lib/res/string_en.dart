@@ -43,4 +43,7 @@ const Map<String, String> languageEn = {
   Ids.justShow: 'Just show',
   Ids.edit: 'Edit',
   Ids.insertDelimiter: 'Insert Delimiter',
+	Ids.keep:'keep',
+	Ids.saveAs:'Save as',
+	Ids.pleaseSelectAnOutputFile:'Please select an output file:',
 };

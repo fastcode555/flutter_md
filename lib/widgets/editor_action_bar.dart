@@ -1,9 +1,9 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_md/res/strings.dart';
 
 import '../model/edit_action_model.dart';
 import '../res/r.dart';
-import '../res/strings.dart';
 import 'canet_button.dart';
 import 'colour_widget.dart';
 import 'poup/poup_manager.dart';
@@ -31,6 +31,17 @@ class _EditorActionBarState extends State<EditorActionBar> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
             children: [
+              IconButton(
+                tooltip: Ids.keep.tr,
+                onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.save),
+                icon: const Icon(Icons.save),
+              ),
+              IconButton(
+                tooltip: Ids.saveAs.tr,
+                onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.saveAs),
+                icon: const Icon(Icons.save_as),
+              ),
+              const VerticalDivider(),
               IconButton(
                 tooltip: Ids.boldStyle.tr,
                 onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.bold),

@@ -36,6 +36,12 @@ class EditActionModel {
   ///页面进支持展示
   static const int justShow = 21;
 
+  ///保存
+  static const int save = 30;
+
+  ///另存为
+  static const int saveAs = 31;
+
   ///选中的文本内容
   String? content;
 

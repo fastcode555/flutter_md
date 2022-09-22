@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:common/common.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_md/res/strings.dart';
 
 import '../model/edit_action_model.dart';
 import '../widgets/editor_action_bar.dart';
@@ -89,7 +91,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
               ValueListenableBuilder<String>(
                 valueListenable: _notifier,
                 builder: (_, data, __) {
-                  return Text('$data% ', textAlign: TextAlign.end);
+                  return Text(data == '0.00' ? "" : '$data% ', textAlign: TextAlign.end);
                 },
               ),
               const SizedBox(width: 6),
@@ -137,6 +139,10 @@ class _MdEditorPageState extends State<MdEditorPage> {
           _isEdit = false;
         });
       }
+    } else if (model.action == EditActionModel.save) {
+      _saveFile();
+    } else if (model.action == EditActionModel.saveAs) {
+      _saveAsFile();
     }
   }
 
@@ -144,5 +150,33 @@ class _MdEditorPageState extends State<MdEditorPage> {
   void dispose() {
     super.dispose();
     _actionNotifier.removeListener(_listenerPanelChanged);
+  }
+
+  ///保存文件
+  void _saveFile() async {
+    if (_file == null) {
+      String? outputFile = await FilePicker.platform.saveFile(
+        dialogTitle: Ids.pleaseSelectAnOutputFile.tr,
+        fileName: 'NewFile.md',
+      );
+      if (outputFile != null) {
+        _file = File(outputFile);
+      }
+      _file?.writeAsString(_controller.text);
+      setState(() {});
+    }
+  }
+
+  ///另存文件为
+  void _saveAsFile() async {
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: Ids.pleaseSelectAnOutputFile.tr,
+      fileName: 'NewFile.md',
+    );
+    if (outputFile != null) {
+      File file = File(outputFile);
+      file.writeAsString(_controller.text);
+      _file ??= file;
+    }
   }
 }

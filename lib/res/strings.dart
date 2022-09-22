@@ -41,4 +41,7 @@ class Ids {
   static const String justShow = 'justShow';
   static const String edit = 'edit';
   static const String insertDelimiter = 'insert delimiter';
+  static const String keep = 'Save';
+  static const String saveAs = 'saveAs';
+  static const String pleaseSelectAnOutputFile = 'pleaseSelectAnOutputFile:';
 }

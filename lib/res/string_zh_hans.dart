@@ -43,4 +43,7 @@ const Map<String, String> languageZhHans = {
   Ids.justShow: '只看',
   Ids.edit: '编辑',
   Ids.insertDelimiter: '插入分隔符',
+  Ids.keep: '保存',
+	Ids.saveAs:'另存为',
+	Ids.pleaseSelectAnOutputFile:'请选择一个输出文件：',
 };

@@ -79,26 +79,26 @@ class EditUtils {
   static final RegExp matchGanRegex = RegExp(r'^[ 　]*[-=^$#@!?/<>+|\\~%&*]{1,50}[ ]*');
 
   ///匹配类似(1).1).等这种括号开头的
-  static final RegExp matchSymbolRegex = RegExp(r'^[ 　]*[-\(\[{\【\「〖«\《\〈\『\（ ]*\d+[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
+  static final RegExp matchSymbolRegex = RegExp(r'^[ 　#]*[-\(\[{\【\「〖«\《\〈\『\（ ]*\d+[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
 
   ///中文的序号匹配
   static final RegExp cnDigitalRegex =
-      RegExp(r'^[ 　]*[\(\[{\【\「〖«\《\〈\『\（]*[零一二三四五六七八九十百千]{1,30}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
+      RegExp(r'^[ 　#]*[\(\[{\【\「〖«\《\〈\『\（]*[零一二三四五六七八九十百千]{1,30}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
   static final RegExp cnDigital = RegExp(r'[零一二三四五六七八九十百千]{1,30}');
 
   static final RegExp specialDigitalRegex =
-      RegExp(r'^[ 　]*[- \(\[{\【\「〖«\《\〈\『\（]*[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]{1}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
+      RegExp(r'^[ 　#]*[- \(\[{\【\「〖«\《\〈\『\（]*[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]{1}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
   static final RegExp specialDigital = RegExp(r'[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]{1}');
   static final RegExp specialDigitalRegex2 =
-      RegExp(r'^[ 　]*[- \(\[{\【\「〖«\《\〈\『\（]*[❶❷❸❹❺❻❼❽❾]{1}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
+      RegExp(r'^[ 　#]*[- \(\[{\【\「〖«\《\〈\『\（]*[❶❷❸❹❺❻❼❽❾]{1}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
   static final RegExp specialDigital2 = RegExp(r'[❶❷❸❹❺❻❼❽❾]{1}');
 
   static final RegExp specialDigitalRegex3 =
-      RegExp(r'^[ 　]*[- \(\[{\【\「〖«\《\〈\『\（]*[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩXIXIIXIIIXIVXVXVI]{1,4}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
+      RegExp(r'^[ 　#]*[- \(\[{\【\「〖«\《\〈\『\（]*[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩXIXIIXIIIXIVXVXVI]{1,4}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
   static final RegExp specialDigital3 = RegExp(r'[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩXIXIIXIIIXIVXVXVI]{1,4}');
 
   static final RegExp specialDigitalRegex4 =
-      RegExp(r'^[ 　]*[- \(\[{\【\「〖«\《\〈\『\（]*[ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅹⅰⅹⅱⅹⅲⅹⅰⅴⅹⅴⅹⅴⅰ]{1,4}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
+      RegExp(r'^[ 　#]*[- \(\[{\【\「〖«\《\〈\『\（]*[ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅹⅰⅹⅱⅹⅲⅹⅰⅴⅹⅴⅹⅴⅰ]{1,4}[\)\]}\】\」»〗\》\〉\』\）]*[.,，。、]*');
   static final RegExp specialDigital4 = RegExp(r'[ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅹⅰⅹⅱⅹⅲⅹⅰⅴⅹⅴⅹⅴⅰ]{1,4}');
 
   ///使用正则匹配html或者xml的标签，是能够自动添加尾标签

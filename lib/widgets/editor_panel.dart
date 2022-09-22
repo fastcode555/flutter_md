@@ -56,28 +56,39 @@ class _EditorPanelState extends State<EditorPanel> {
         metricsChangedListener: _metricsChangedListener,
         child: LayoutBuilder(
           builder: (_, constraints) {
-            return SingleChildScrollView(
-              controller: _scrollController,
-              child: AutoMdEditor(
-                controller: widget.controller!,
-                focusNode: widget.focusNode!,
-                hintWidth: constraints.maxWidth,
-                hintHeight: constraints.maxHeight,
-                options: TipModel.defaults,
-                fieldViewBuilder: (
-                  BuildContext context,
-                  TextEditingController textEditingController,
-                  FocusNode focusNode,
-                  VoidCallback onFieldSubmitted,
-                ) {
-                  return MultilineEditor(
-                    file: widget.file,
-                    controller: textEditingController,
-                    autofocus: widget.autofocus,
-                    focusNode: focusNode,
-                    autoEmpty: widget.autoEmpty,
-                  );
-                },
+            return GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (!(widget.focusNode?.hasFocus ?? false)) {
+                  widget.focusNode?.requestFocus();
+                }
+              },
+              child: SizedBox(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: AutoMdEditor(
+                    controller: widget.controller!,
+                    focusNode: widget.focusNode!,
+                    hintWidth: constraints.maxWidth,
+                    hintHeight: constraints.maxHeight,
+                    options: TipModel.defaults,
+                    fieldViewBuilder: (
+                      BuildContext context,
+                      TextEditingController textEditingController,
+                      FocusNode focusNode,
+                      VoidCallback onFieldSubmitted,
+                    ) {
+                      return MultilineEditor(
+                        file: widget.file,
+                        controller: textEditingController,
+                        autofocus: widget.autofocus,
+                        focusNode: focusNode,
+                        autoEmpty: widget.autoEmpty,
+                      );
+                    },
+                  ),
+                ),
               ),
             );
           },
@@ -97,7 +108,17 @@ class _EditorPanelState extends State<EditorPanel> {
   void _barActionCallBack() {
     if (_actionNotifier.value != null && widget.controller != null) {
       EditActionModel model = _actionNotifier.value!;
-      if (model.action == EditActionModel.splitScreen || model.action == EditActionModel.justShow) return;
+      for (int action in [
+        EditActionModel.splitScreen,
+        EditActionModel.justShow,
+        EditActionModel.save,
+        EditActionModel.saveAs
+      ]) {
+        if (model.action == action) {
+          return;
+        }
+      }
+
       TextEditingController controller = widget.controller!;
       int start = controller.selection.start;
       int end = controller.selection.end;

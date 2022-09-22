@@ -43,4 +43,7 @@ const Map<String, String> languageZhHant = {
   Ids.justShow: '只看',
   Ids.edit: '編輯',
   Ids.insertDelimiter: '插入分隔符',
+  Ids.keep: '保持',
+  Ids.saveAs: '另存為',
+  Ids.pleaseSelectAnOutputFile: '請選擇一個輸出文件：',
 };
