@@ -23,4 +23,5 @@ const Map<String, String> languageZhHans = {
   Ids.keep: '保存',
   Ids.saveAs: '另存为',
   Ids.pleaseSelectAnOutputFile: '请选择一个输出文件：',
+	Ids.newline:'换行',
 };

@@ -78,6 +78,11 @@ class _EditorActionBarState extends State<EditorActionBar> {
                 onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.insertImage),
                 icon: const Icon(Icons.image),
               ),
+              IconButton(
+                tooltip: Ids.newline.tr,
+                onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.newLine),
+                icon: Image.asset(R.icChangeLine, color: context.primaryColor),
+              ),
               CaretButton(
                 onTap: (String value) {
                   widget.notifier.value = EditActionModel(content: value);

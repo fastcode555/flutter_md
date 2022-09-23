@@ -30,6 +30,9 @@ class EditActionModel {
   ///插入分割符
   static const int insertDelimiter = 10;
 
+  ///插入换行符
+  static const int newLine = 11;
+
   ///页面进行分屏
   static const int splitScreen = 20;
 

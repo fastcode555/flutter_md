@@ -35,6 +35,7 @@ class TipModel {
     TipModel.df("|||||||\n-|-|-|-|-|-|-|-", '', "Table 8", start: 0),
     TipModel.df("||||||||\n-|-|-|-|-|-|-|-|-", '', "Table 9", start: 0),
     TipModel.df("<u></u>", 'u', "Underline", start: 3),
+    TipModel.df("<br/>", 'br', "NewLine", start: 5),
     TipModel.df("<kbd></kbd>", 'kbd', "KBD", start: 5),
     TipModel.df("<font color=red></font>", 'font', "Font", start: 16),
     TipModel.df("<img src=\"\"/>", 'img', 'Insert Html Image', start: 10),

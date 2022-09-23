@@ -23,4 +23,5 @@ const Map<String, String> languageEn = {
   Ids.keep: 'keep',
   Ids.saveAs: 'Save as',
   Ids.pleaseSelectAnOutputFile: 'Please select an output file:',
+	Ids.newline:'newline',
 };

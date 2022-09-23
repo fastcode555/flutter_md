@@ -21,4 +21,5 @@ class Ids {
   static const String keep = 'Save';
   static const String saveAs = 'saveAs';
   static const String pleaseSelectAnOutputFile = 'pleaseSelectAnOutputFile:';
+	static const String newline = 'newline';
 }

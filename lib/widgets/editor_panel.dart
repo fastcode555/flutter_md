@@ -141,6 +141,10 @@ class _EditorPanelState extends State<EditorPanel> {
           header = "$header\n-------------------------------------\n";
           controller.text = '$header$tail';
           controller.selection = EditUtils.createTextSelection(header);
+        } else if (model.action == EditActionModel.newLine) {
+          header = "$header<br/>";
+          controller.text = '$header$tail';
+          controller.selection = EditUtils.createTextSelection(header);
         } else if (model.action == EditActionModel.font) {
           String newHeader = "$header<font color=${model.content}>";
           String newTail = "</font>$tail";
