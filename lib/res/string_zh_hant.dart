@@ -24,4 +24,8 @@ const Map<String, String> languageZhHant = {
   Ids.saveAs: '另存為',
   Ids.pleaseSelectAnOutputFile: '請選擇一個輸出文件：',
 	Ids.newline:'換行',
+	Ids.newFile:'新文件',
+	Ids.openFile:'打開文件',
+	Ids.pleaseSelectTheRequiredMarkdownFile:'請選擇需要的Markdown文件',
+	Ids.welcomeToFlutterMarkdownEditor:'歡迎使用Flutter Markdown Editor',
 };

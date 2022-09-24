@@ -22,4 +22,8 @@ class Ids {
   static const String saveAs = 'saveAs';
   static const String pleaseSelectAnOutputFile = 'pleaseSelectAnOutputFile:';
 	static const String newline = 'newline';
+	static const String newFile = 'newFile';
+	static const String openFile = 'openFile';
+	static const String pleaseSelectTheRequiredMarkdownFile = 'pleaseSelectTheRequiredMarkdownFile';
+	static const String welcomeToFlutterMarkdownEditor = 'welcomeToFlutterMarkdownEditor';
 }

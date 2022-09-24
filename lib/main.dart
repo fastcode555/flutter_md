@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_md/base/common_config_imp.dart';
 import 'package:flutter_md/res/translation_service.dart';
 import 'package:flutter_md/themes.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'app_pages.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   CommonConfig.init(CommonConfigImp());
   runApp(const MyApp());
 }

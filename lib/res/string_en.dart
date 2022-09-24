@@ -24,4 +24,8 @@ const Map<String, String> languageEn = {
   Ids.saveAs: 'Save as',
   Ids.pleaseSelectAnOutputFile: 'Please select an output file:',
 	Ids.newline:'newline',
+	Ids.newFile:'new file',
+	Ids.openFile:'Open File',
+	Ids.pleaseSelectTheRequiredMarkdownFile:'Please select the required Markdown file',
+	Ids.welcomeToFlutterMarkdownEditor:'Welcome to Flutter Markdown Editor',
 };

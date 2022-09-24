@@ -10,10 +10,15 @@ import '../widgets/editor_action_bar.dart';
 import '../widgets/editor_panel.dart';
 import 'markdown_page.dart';
 
+typedef CreateFileCallback = Function(String? tag, File? file);
+
 class MdEditorPage extends StatefulWidget {
+  final File? file;
+  final String? tag;
+  final CreateFileCallback? callBack;
   static const String routeName = "/widgets/md_editor_page";
 
-  const MdEditorPage({super.key});
+  const MdEditorPage({this.file, this.tag, this.callBack, super.key});
 
   @override
   _MdEditorPageState createState() => _MdEditorPageState();
@@ -37,6 +42,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
   @override
   void initState() {
     super.initState();
+    _file = widget.file;
     _actionNotifier.addListener(_listenerPanelChanged);
   }
 
@@ -157,21 +163,22 @@ class _MdEditorPageState extends State<MdEditorPage> {
     if (_file == null) {
       String? outputFile = await FilePicker.platform.saveFile(
         dialogTitle: Ids.pleaseSelectAnOutputFile.tr,
-        fileName: 'NewFile.md',
+        fileName: widget.tag ?? 'NewFile.md',
       );
       if (outputFile != null) {
         _file = File(outputFile);
+        widget.callBack?.call(widget.tag, _file);
       }
-      _file?.writeAsString(_controller.text);
       setState(() {});
     }
+    _file?.writeAsString(_controller.text);
   }
 
   ///另存文件为
   void _saveAsFile() async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: Ids.pleaseSelectAnOutputFile.tr,
-      fileName: 'NewFile.md',
+      fileName: widget.tag ?? 'NewFile.md',
     );
     if (outputFile != null) {
       File file = File(outputFile);
