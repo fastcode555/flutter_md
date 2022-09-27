@@ -68,30 +68,27 @@ class _EditorPanelState extends State<EditorPanel> {
               },
               child: SizedBox(
                 height: double.infinity,
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: AutoCompleteEditor(
-                    controller: widget.controller!,
-                    focusNode: widget.focusNode!,
-                    hintWidth: constraints.maxWidth,
-                    hintHeight: constraints.maxHeight,
-                    highlightedOptionIndex: hightlightNotifier,
-                    options: TipModel.defaultMds,
-                    fieldViewBuilder: (
-                      BuildContext context,
-                      TextEditingController textEditingController,
-                      FocusNode focusNode,
-                      VoidCallback onFieldSubmitted,
-                    ) {
-                      return MultilineEditor(
-                        file: widget.file,
-                        controller: textEditingController,
-                        autofocus: widget.autofocus,
-                        focusNode: focusNode,
-                        autoEmpty: widget.autoEmpty,
-                      );
-                    },
-                  ),
+                child: AutoCompleteEditor(
+                  controller: widget.controller!,
+                  focusNode: widget.focusNode!,
+                  hintWidth: constraints.maxWidth,
+                  hintHeight: constraints.maxHeight,
+                  highlightedOptionIndex: hightlightNotifier,
+                  options: TipModel.defaultMds,
+                  fieldViewBuilder: (
+                    BuildContext context,
+                    TextEditingController textEditingController,
+                    FocusNode focusNode,
+                    VoidCallback onFieldSubmitted,
+                  ) {
+                    return MultilineEditor(
+                      file: widget.file,
+                      controller: textEditingController,
+                      autofocus: widget.autofocus,
+                      focusNode: focusNode,
+                      autoEmpty: widget.autoEmpty,
+                    );
+                  },
                 ),
               ),
             );

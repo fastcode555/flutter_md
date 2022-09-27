@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_md/utils/edit_utils.dart';
 
 import '../model/tip_model.dart';
+import '../utils/edit_utils.dart';
 import 'auto_complete_ex.dart' as auto;
 
 /// @date 6/9/22
@@ -240,11 +240,11 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
       //如果有指定从哪个位置开始，就指定位置
       if (tipModel.start != null) {
         widget.controller.selection = TextSelection.fromPosition(
-          TextPosition(affinity: TextAffinity.downstream, offset: (header.length - _tipText.length) + tipModel.start!),
+          TextPosition(affinity: TextAffinity.upstream, offset: (header.length - _tipText.length) + tipModel.start!),
         );
       } else {
         widget.controller.selection = TextSelection.fromPosition(
-          TextPosition(affinity: TextAffinity.downstream, offset: newHeader.length),
+          TextPosition(affinity: TextAffinity.upstream, offset: newHeader.length),
         );
       }
       Future.delayed(const Duration(milliseconds: 10), () {
@@ -254,7 +254,9 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
         if (start == end) {
           String content = widget.controller.text;
           String header = content.substring(0, start);
-          header = header.substring(0, header.length - 1);
+          if (header.endsWith("\n")) {
+            header = header.substring(0, header.length - 1);
+          }
           String tail = content.substring(start, content.length);
           widget.controller.text = "$header$tail";
           widget.controller.selection = EditUtils.createTextSelection(header);
