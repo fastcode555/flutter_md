@@ -41,6 +41,9 @@ class _EditorPanelState extends State<EditorPanel> {
   final ScrollController _scrollController = ScrollController();
   late ValueNotifier<EditActionModel?> _actionNotifier;
 
+  ///提示高亮的位置
+  final ValueNotifier<int> hightlightNotifier = ValueNotifier(0);
+
   @override
   void initState() {
     super.initState();
@@ -72,6 +75,7 @@ class _EditorPanelState extends State<EditorPanel> {
                     focusNode: widget.focusNode!,
                     hintWidth: constraints.maxWidth,
                     hintHeight: constraints.maxHeight,
+                    highlightedOptionIndex: hightlightNotifier,
                     options: TipModel.defaults,
                     fieldViewBuilder: (
                       BuildContext context,
@@ -84,6 +88,12 @@ class _EditorPanelState extends State<EditorPanel> {
                         controller: textEditingController,
                         autofocus: widget.autofocus,
                         focusNode: focusNode,
+                        onFieldSubmitted: (string) {
+                          onFieldSubmitted();
+                          if (!focusNode.hasFocus) {
+                            focusNode.requestFocus();
+                          }
+                        },
                         autoEmpty: widget.autoEmpty,
                       );
                     },

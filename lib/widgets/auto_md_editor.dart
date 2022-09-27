@@ -22,6 +22,7 @@ class AutoMdEditor extends StatefulWidget {
   ///这个就是展示的选项了
   final List<TipModel> options;
   final auto.AutocompleteFieldViewBuilder? fieldViewBuilder;
+  final ValueNotifier<int> highlightedOptionIndex;
 
   const AutoMdEditor({
     required this.controller,
@@ -33,6 +34,7 @@ class AutoMdEditor extends StatefulWidget {
     this.padding = 16.0,
     this.options = const [],
     this.fieldViewBuilder,
+    required this.highlightedOptionIndex,
     this.style = const TextStyle(height: 1.1),
     Key? key,
   }) : super(key: key);
@@ -72,9 +74,10 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
   @override
   Widget build(BuildContext context) {
     return auto.AutoCompleteEx<TipModel>(
-      onSelected: (s) {},
+      onSelected: _onSelected,
       textEditingController: widget.controller,
       focusNode: widget.focusNode,
+      highlightedOptionIndex: widget.highlightedOptionIndex,
       optionsViewBuilder: (_, onSelected, options) => _optionsViewBuilder(_, onSelected, options, context),
       optionsBuilder: _optionsBuilder,
       fieldViewBuilder: widget.fieldViewBuilder ?? _fieldViewBuilder,
@@ -99,38 +102,22 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
               height: (options.length > widget.maxShowCount ? widget.maxShowCount : options.length) * widget.itemHeight,
               child: MediaQuery.removePadding(
                 context: context,
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    TipModel tipModel = options.elementAt(index);
-                    return InkWell(
-                      onTap: () {
-                        String content = widget.controller.text;
-                        TextSelection selection = widget.controller.selection;
-                        int start = selection.start;
-                        String header = content.substring(0, start);
-                        String tail = content.substring(start, content.length);
-                        if (tipModel.template!.startsWith(_tipText.toLowerCase()) ||
-                            tipModel.keyword!.startsWith(_tipText.toLowerCase())) {
-                          String newHeader = header.replaceRange(start - _tipText.length, start, tipModel.template!);
-                          widget.controller.text = "$newHeader$tail";
-                          //如果有指定从哪个位置开始，就指定位置
-                          if (tipModel.start != null) {
-                            widget.controller.selection = TextSelection.fromPosition(
-                              TextPosition(
-                                  affinity: TextAffinity.downstream,
-                                  offset: (header.length - _tipText.length) + tipModel.start!),
-                            );
-                          } else {
-                            widget.controller.selection = TextSelection.fromPosition(
-                              TextPosition(affinity: TextAffinity.downstream, offset: newHeader.length),
-                            );
-                          }
-                        }
+                child: ValueListenableBuilder<int>(
+                  valueListenable: widget.highlightedOptionIndex,
+                  builder: (_, index, __) {
+                    return ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        TipModel tipModel = options.elementAt(index);
+                        return GestureDetector(
+                          onTap: () {
+                            _onSelected(tipModel);
+                          },
+                          child: _buildItem(tipModel, index, context),
+                        );
                       },
-                      child: _buildItem(tipModel),
+                      itemCount: options.length,
                     );
                   },
-                  itemCount: options.length,
                 ),
               ),
             ),
@@ -205,10 +192,12 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
   }
 
   ///创建Item
-  Widget _buildItem(TipModel tipModel) {
+  Widget _buildItem(TipModel tipModel, int index, BuildContext context) {
+    int selectIndex = widget.highlightedOptionIndex.value;
     return Container(
       height: widget.itemHeight,
       alignment: Alignment.centerLeft,
+      color: index == selectIndex ? context.primaryColor.withOpacity(0.5) : null,
       padding: EdgeInsets.symmetric(horizontal: widget.padding),
       child: Row(
         children: [
@@ -237,5 +226,27 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
         ],
       ),
     );
+  }
+
+  void _onSelected(TipModel tipModel) {
+    String content = widget.controller.text;
+    TextSelection selection = widget.controller.selection;
+    int start = selection.start;
+    String header = content.substring(0, start);
+    String tail = content.substring(start, content.length);
+    if (tipModel.template!.startsWith(_tipText.toLowerCase()) || tipModel.keyword!.startsWith(_tipText.toLowerCase())) {
+      String newHeader = header.replaceRange(start - _tipText.length, start, tipModel.template!);
+      widget.controller.text = "$newHeader$tail";
+      //如果有指定从哪个位置开始，就指定位置
+      if (tipModel.start != null) {
+        widget.controller.selection = TextSelection.fromPosition(
+          TextPosition(affinity: TextAffinity.downstream, offset: (header.length - _tipText.length) + tipModel.start!),
+        );
+      } else {
+        widget.controller.selection = TextSelection.fromPosition(
+          TextPosition(affinity: TextAffinity.downstream, offset: newHeader.length),
+        );
+      }
+    }
   }
 }

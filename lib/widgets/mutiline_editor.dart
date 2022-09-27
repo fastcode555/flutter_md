@@ -17,6 +17,9 @@ class MultilineEditor extends StatefulWidget {
   final ScrollController? scrollController;
   final bool autoEmpty;
   final TextStyle? style;
+  final ValueChanged<String>? onFieldSubmitted;
+  final FormFieldValidator<String?>? validator;
+  final int? maxLines;
 
   const MultilineEditor({
     this.file,
@@ -26,7 +29,10 @@ class MultilineEditor extends StatefulWidget {
     this.focusNode,
     this.content,
     this.style,
+    this.onFieldSubmitted,
+    this.validator,
     this.autoEmpty = false,
+    this.maxLines,
     Key? key,
   }) : super(key: key);
 
@@ -86,14 +92,17 @@ class _MultilineEditorState extends State<MultilineEditor> with AutomaticKeepAli
     return TextFormField(
       autofocus: widget.autofocus,
       scrollPadding: EdgeInsets.zero,
-      autocorrect: widget.autofocus,
+      autocorrect: false,
       scrollController: widget.scrollController,
       keyboardType: TextInputType.multiline,
       controller: _controller,
-      minLines: 1,
       style: widget.style,
-      maxLines: null,
+      maxLines: widget.maxLines,
       focusNode: widget.focusNode,
+      validator: widget.validator,
+      onFieldSubmitted: (text) {
+        widget.onFieldSubmitted?.call(text);
+      },
       onChanged: (value) {
         _delayDealTimer?.cancel();
         _delayDealTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {

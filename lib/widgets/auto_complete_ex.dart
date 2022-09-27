@@ -39,6 +39,7 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
     this.onSelected,
     this.textEditingController,
     this.initialValue,
+    this.highlightedOptionIndex,
     required this.offsetBuilder,
   })  : assert(displayStringForOption != null),
         assert(
@@ -67,6 +68,7 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
   final TextEditingController? textEditingController;
 
   final TextEditingValue? initialValue;
+  final ValueNotifier<int>? highlightedOptionIndex;
 
   static void onFieldSubmitted<T extends Object>(GlobalKey key) {
     final _AutoCompleteExState<T> rawAutocomplete = key.currentState! as _AutoCompleteExState<T>;
@@ -94,7 +96,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
   T? _selection;
   bool _userHidOptions = false;
   String _lastFieldText = '';
-  final ValueNotifier<int> _highlightedOptionIndex = ValueNotifier<int>(0);
+  late ValueNotifier<int> _highlightedOptionIndex;
 
   static const Map<ShortcutActivator, Intent> _shortcuts = <ShortcutActivator, Intent>{
     SingleActivator(LogicalKeyboardKey.arrowUp): AutocompletePreviousOptionIntent(),
@@ -144,11 +146,11 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
       return;
     }
     _selection = nextSelection;
-    final String selectionString = widget.displayStringForOption(nextSelection);
+/*    final String selectionString = widget.displayStringForOption(nextSelection);
     _textEditingController.value = TextEditingValue(
       selection: TextSelection.collapsed(offset: selectionString.length),
       text: selectionString,
-    );
+    );*/
     _updateActions();
     _updateOverlay();
     widget.onSelected?.call(_selection!);
@@ -175,6 +177,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
       _updateOverlay();
       return;
     }
+    print("执行上下按钮highlightNextOption");
     _updateHighlight(_highlightedOptionIndex.value + 1);
   }
 
@@ -225,6 +228,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
               highlightIndexNotifier: _highlightedOptionIndex,
               child: Builder(
                 builder: (BuildContext context) {
+                  print("执行重新绘制");
                   return widget.optionsViewBuilder(context, _select, _options);
                 },
               ),
@@ -278,6 +282,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
   @override
   void initState() {
     super.initState();
+    _highlightedOptionIndex = widget.highlightedOptionIndex ?? ValueNotifier(0);
     _textEditingController = widget.textEditingController ?? TextEditingController.fromValue(widget.initialValue);
     _textEditingController.addListener(_onChangedField);
     _focusNode = widget.focusNode ?? FocusNode();
