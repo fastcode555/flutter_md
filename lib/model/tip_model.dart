@@ -11,7 +11,7 @@ class TipModel {
 
   ///选中文本之后开始的位置
   int? start;
-  static List<TipModel> defaults = [
+  static List<TipModel> defaultMds = [
     TipModel.df("# ", 'h1', "H1"),
     TipModel.df("## ", 'h2', "H2"),
     TipModel.df("### ", 'h3', "H3"),

@@ -76,7 +76,7 @@ class _EditorPanelState extends State<EditorPanel> {
                     hintWidth: constraints.maxWidth,
                     hintHeight: constraints.maxHeight,
                     highlightedOptionIndex: hightlightNotifier,
-                    options: TipModel.defaults,
+                    options: TipModel.defaultMds,
                     fieldViewBuilder: (
                       BuildContext context,
                       TextEditingController textEditingController,
