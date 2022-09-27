@@ -234,7 +234,8 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
     int start = selection.start;
     String header = content.substring(0, start);
     String tail = content.substring(start, content.length);
-    if (tipModel.template!.startsWith(_tipText.toLowerCase()) || tipModel.keyword!.startsWith(_tipText.toLowerCase())) {
+    if (tipModel.template!.toLowerCase().startsWith(_tipText.toLowerCase()) ||
+        tipModel.keyword!.toLowerCase().startsWith(_tipText.toLowerCase())) {
       String newHeader = header.replaceRange(start - _tipText.length, start, tipModel.template!);
       widget.controller.text = "$newHeader$tail";
       //如果有指定从哪个位置开始，就指定位置

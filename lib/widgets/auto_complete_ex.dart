@@ -156,6 +156,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
     _updateActions();
     _updateOverlay();
     widget.onSelected?.call(_selection!);
+    _selection = null;
   }
 
   void _updateHighlight(int newIndex) {

@@ -66,30 +66,32 @@ class _EditorPanelState extends State<EditorPanel> {
                   widget.focusNode?.requestFocus();
                 }
               },
-              child: SizedBox(
-                height: double.infinity,
-                child: AutoCompleteEditor(
-                  controller: widget.controller!,
-                  focusNode: widget.focusNode!,
-                  hintWidth: constraints.maxWidth,
-                  hintHeight: constraints.maxHeight,
-                  highlightedOptionIndex: hightlightNotifier,
-                  options: TipModel.defaultMds,
-                  fieldViewBuilder: (
-                    BuildContext context,
-                    TextEditingController textEditingController,
-                    FocusNode focusNode,
-                    VoidCallback onFieldSubmitted,
-                  ) {
-                    return MultilineEditor(
-                      file: widget.file,
-                      controller: textEditingController,
-                      autofocus: widget.autofocus,
-                      focusNode: focusNode,
-                      autoEmpty: widget.autoEmpty,
-                    );
-                  },
-                ),
+              child: Stack(
+                children: [
+                  AutoCompleteEditor(
+                    controller: widget.controller!,
+                    focusNode: widget.focusNode!,
+                    hintWidth: constraints.maxWidth,
+                    hintHeight: constraints.maxHeight,
+                    highlightedOptionIndex: hightlightNotifier,
+                    options: TipModel.defaultMds,
+                    fieldViewBuilder: (
+                      BuildContext context,
+                      TextEditingController textEditingController,
+                      FocusNode focusNode,
+                      VoidCallback onFieldSubmitted,
+                    ) {
+                      return MultilineEditor(
+                        file: widget.file,
+                        scrollController: _scrollController,
+                        controller: textEditingController,
+                        autofocus: widget.autofocus,
+                        focusNode: focusNode,
+                        autoEmpty: widget.autoEmpty,
+                      );
+                    },
+                  )
+                ],
               ),
             );
           },
