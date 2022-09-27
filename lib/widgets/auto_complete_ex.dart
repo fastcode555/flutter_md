@@ -91,6 +91,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
   late final Map<Type, Action<Intent>> _actionMap;
   late final _AutocompleteCallbackAction<AutocompletePreviousOptionIntent> _previousOptionAction;
   late final _AutocompleteCallbackAction<AutocompleteNextOptionIntent> _nextOptionAction;
+  late final _AutocompleteCallbackAction<AutocompleteEnterOptionIntent> _enterOptionAction;
   late final _AutocompleteCallbackAction<DismissIntent> _hideOptionsAction;
   Iterable<T> _options = Iterable<T>.empty();
   T? _selection;
@@ -101,6 +102,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
   static const Map<ShortcutActivator, Intent> _shortcuts = <ShortcutActivator, Intent>{
     SingleActivator(LogicalKeyboardKey.arrowUp): AutocompletePreviousOptionIntent(),
     SingleActivator(LogicalKeyboardKey.arrowDown): AutocompleteNextOptionIntent(),
+    SingleActivator(LogicalKeyboardKey.enter): AutocompleteEnterOptionIntent(),
   };
 
   OverlayEntry? _floatingOptions;
@@ -177,8 +179,19 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
       _updateOverlay();
       return;
     }
-    print("执行上下按钮highlightNextOption");
     _updateHighlight(_highlightedOptionIndex.value + 1);
+  }
+
+  void _highlightEnterOption(AutocompleteEnterOptionIntent intent) {
+    if (_userHidOptions) {
+      _userHidOptions = false;
+      _updateActions();
+      _updateOverlay();
+      return;
+    }
+    if (widget.highlightedOptionIndex!.value >= 0) {
+      _select(_options.elementAt(_highlightedOptionIndex.value));
+    }
   }
 
   Object? _hideOptions(DismissIntent intent) {
@@ -195,6 +208,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
     _previousOptionAction.enabled = enabled;
     _nextOptionAction.enabled = enabled;
     _hideOptionsAction.enabled = enabled;
+    _enterOptionAction.enabled = enabled;
   }
 
   void _updateActions() {
@@ -290,10 +304,12 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
     _previousOptionAction =
         _AutocompleteCallbackAction<AutocompletePreviousOptionIntent>(onInvoke: _highlightPreviousOption);
     _nextOptionAction = _AutocompleteCallbackAction<AutocompleteNextOptionIntent>(onInvoke: _highlightNextOption);
+    _enterOptionAction = _AutocompleteCallbackAction<AutocompleteEnterOptionIntent>(onInvoke: _highlightEnterOption);
     _hideOptionsAction = _AutocompleteCallbackAction<DismissIntent>(onInvoke: _hideOptions);
     _actionMap = <Type, Action<Intent>>{
       AutocompletePreviousOptionIntent: _previousOptionAction,
       AutocompleteNextOptionIntent: _nextOptionAction,
+      AutocompleteEnterOptionIntent: _enterOptionAction,
       DismissIntent: _hideOptionsAction,
     };
     _updateActions();
@@ -373,6 +389,10 @@ class AutocompletePreviousOptionIntent extends Intent {
 
 class AutocompleteNextOptionIntent extends Intent {
   const AutocompleteNextOptionIntent();
+}
+
+class AutocompleteEnterOptionIntent extends Intent {
+  const AutocompleteEnterOptionIntent();
 }
 
 class AutocompleteHighlightedOption extends InheritedNotifier<ValueNotifier<int>> {

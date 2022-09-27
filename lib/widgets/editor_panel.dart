@@ -88,12 +88,6 @@ class _EditorPanelState extends State<EditorPanel> {
                         controller: textEditingController,
                         autofocus: widget.autofocus,
                         focusNode: focusNode,
-                        onFieldSubmitted: (string) {
-                          onFieldSubmitted();
-                          if (!focusNode.hasFocus) {
-                            focusNode.requestFocus();
-                          }
-                        },
                         autoEmpty: widget.autoEmpty,
                       );
                     },

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_md/utils/edit_utils.dart';
 
 import '../model/tip_model.dart';
 import 'auto_complete_ex.dart' as auto;
@@ -247,6 +248,19 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
           TextPosition(affinity: TextAffinity.downstream, offset: newHeader.length),
         );
       }
+      Future.delayed(const Duration(milliseconds: 10), () {
+        TextSelection selection = widget.controller.selection;
+        int start = selection.start;
+        int end = selection.end;
+        if (start == end) {
+          String content = widget.controller.text;
+          String header = content.substring(0, start);
+          header = header.substring(0, header.length - 1);
+          String tail = content.substring(start, content.length);
+          widget.controller.text = "$header$tail";
+          widget.controller.selection = EditUtils.createTextSelection(header);
+        }
+      });
     }
   }
 }

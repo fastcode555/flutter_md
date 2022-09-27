@@ -17,7 +17,6 @@ class MultilineEditor extends StatefulWidget {
   final ScrollController? scrollController;
   final bool autoEmpty;
   final TextStyle? style;
-  final ValueChanged<String>? onFieldSubmitted;
   final FormFieldValidator<String?>? validator;
   final int? maxLines;
 
@@ -29,7 +28,6 @@ class MultilineEditor extends StatefulWidget {
     this.focusNode,
     this.content,
     this.style,
-    this.onFieldSubmitted,
     this.validator,
     this.autoEmpty = false,
     this.maxLines,
@@ -100,9 +98,6 @@ class _MultilineEditorState extends State<MultilineEditor> with AutomaticKeepAli
       maxLines: widget.maxLines,
       focusNode: widget.focusNode,
       validator: widget.validator,
-      onFieldSubmitted: (text) {
-        widget.onFieldSubmitted?.call(text);
-      },
       onChanged: (value) {
         _delayDealTimer?.cancel();
         _delayDealTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
@@ -297,7 +292,7 @@ class _MultilineEditorState extends State<MultilineEditor> with AutomaticKeepAli
     } else if (line.endsWith(">") && EditUtils.tagRegex.hasMatch(line)) {
       //匹配到了标签
       String? matchContent = EditUtils.tagRegex.allMatches(line).last.group(0);
-      if (matchContent != null && !matchContent.startsWith("</") && !matchContent.endsWith("/>")) {
+      if (matchContent != null && !matchContent.startsWith("</") && !header.endsWith("/>") && !tail.startsWith("</")) {
         String tagName = matchContent.replaceAll("<", '').replaceAll(">", '').trim();
         String newHeader = "$header</$tagName>";
         _controller.text = '$newHeader$tail';
