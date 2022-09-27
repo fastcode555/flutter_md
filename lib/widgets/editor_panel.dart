@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../model/edit_action_model.dart';
 import '../model/tip_model.dart';
 import '../utils/edit_utils.dart';
-import 'auto_md_editor.dart';
+import 'auto_complete_editor.dart';
 import 'dialog/insert_image_dialog.dart';
 import 'dialog/insert_link_dialog.dart';
 import 'mutiline_editor.dart';
@@ -70,7 +70,7 @@ class _EditorPanelState extends State<EditorPanel> {
                 height: double.infinity,
                 child: SingleChildScrollView(
                   controller: _scrollController,
-                  child: AutoMdEditor(
+                  child: AutoCompleteEditor(
                     controller: widget.controller!,
                     focusNode: widget.focusNode!,
                     hintWidth: constraints.maxWidth,

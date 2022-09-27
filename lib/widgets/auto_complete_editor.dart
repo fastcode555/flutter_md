@@ -9,8 +9,7 @@ import 'auto_complete_ex.dart' as auto;
 
 /// @date 6/9/22
 /// describe:
-
-class AutoMdEditor extends StatefulWidget {
+class AutoCompleteEditor extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final int maxShowCount;
@@ -25,7 +24,7 @@ class AutoMdEditor extends StatefulWidget {
   final auto.AutocompleteFieldViewBuilder? fieldViewBuilder;
   final ValueNotifier<int> highlightedOptionIndex;
 
-  const AutoMdEditor({
+  const AutoCompleteEditor({
     required this.controller,
     required this.focusNode,
     this.maxShowCount = 8,
@@ -41,10 +40,10 @@ class AutoMdEditor extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AutoMdEditorState createState() => _AutoMdEditorState();
+  _AutoCompleteEditorState createState() => _AutoCompleteEditorState();
 }
 
-class _AutoMdEditorState extends State<AutoMdEditor> {
+class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
   ///行高
   double _lineHeight = 0.0;
 
@@ -65,7 +64,7 @@ class _AutoMdEditorState extends State<AutoMdEditor> {
   }
 
   @override
-  void didUpdateWidget(covariant AutoMdEditor oldWidget) {
+  void didUpdateWidget(covariant AutoCompleteEditor oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.hintWidth != oldWidget.hintWidth || widget.padding != oldWidget.padding) {
       _width = widget.hintWidth - widget.padding * 2;
