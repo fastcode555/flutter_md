@@ -23,17 +23,19 @@ class AutoCompleteEditor extends StatefulWidget {
   final List<TipModel> options;
   final auto.AutocompleteFieldViewBuilder? fieldViewBuilder;
   final ValueNotifier<int> highlightedOptionIndex;
+  final ScrollController? scrollController;
 
   const AutoCompleteEditor({
     required this.controller,
     required this.focusNode,
-    this.maxShowCount = 8,
+    this.maxShowCount = 15,
     this.itemHeight = 40.0,
     this.hintWidth = 300,
     this.hintHeight = 300,
     this.padding = 16.0,
     this.options = const [],
     this.fieldViewBuilder,
+    this.scrollController,
     required this.highlightedOptionIndex,
     this.style = const TextStyle(height: 1.1),
     Key? key,
@@ -68,6 +70,7 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
     super.didUpdateWidget(oldWidget);
     if (widget.hintWidth != oldWidget.hintWidth || widget.padding != oldWidget.padding) {
       _width = widget.hintWidth - widget.padding * 2;
+      print("页面的宽度$_width,页面的高度${widget.hintHeight}");
     }
   }
 
@@ -81,43 +84,48 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
       optionsViewBuilder: (_, onSelected, options) => _optionsViewBuilder(_, onSelected, options, context),
       optionsBuilder: _optionsBuilder,
       fieldViewBuilder: widget.fieldViewBuilder ?? _fieldViewBuilder,
-      offsetBuilder: _offsetBuilder,
     );
   }
 
   ///构建提示的文本
   Widget _optionsViewBuilder(_, onSelected, options, BuildContext context) {
+    double optionHeight =
+        (options.length > widget.maxShowCount ? widget.maxShowCount : options.length) * widget.itemHeight;
     return Stack(
       children: [
-        SizedBox(
-          width: _width,
-          child: Material(
-            color: Colors.transparent,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: context.primaryColor),
-              ),
-              height: (options.length > widget.maxShowCount ? widget.maxShowCount : options.length) * widget.itemHeight,
-              child: MediaQuery.removePadding(
-                context: context,
-                child: ValueListenableBuilder<int>(
-                  valueListenable: widget.highlightedOptionIndex,
-                  builder: (_, index, __) {
-                    return ListView.builder(
-                      itemBuilder: (BuildContext context, int index) {
-                        TipModel tipModel = options.elementAt(index);
-                        return GestureDetector(
-                          onTap: () {
-                            _onSelected(tipModel);
-                          },
-                          child: _buildItem(tipModel, index, context),
-                        );
-                      },
-                      itemCount: options.length,
-                    );
-                  },
+        Positioned(
+          left: widget.hintWidth,
+          top: widget.focusNode.size.height / 2,
+          child: SizedBox(
+            width: _width,
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: context.primaryColor),
+                ),
+                height: optionHeight,
+                child: MediaQuery.removePadding(
+                  context: context,
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: widget.highlightedOptionIndex,
+                    builder: (_, index, __) {
+                      return ListView.builder(
+                        itemBuilder: (BuildContext context, int index) {
+                          TipModel tipModel = options.elementAt(index);
+                          return GestureDetector(
+                            onTap: () {
+                              _onSelected(tipModel);
+                            },
+                            child: _buildItem(tipModel, index, context),
+                          );
+                        },
+                        itemCount: options.length,
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -177,8 +185,10 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
   Offset _offsetBuilder() {
     String text = widget.controller.text;
     double height = widget.focusNode.size.height;
+    double? maxScroll = widget.scrollController?.position.maxScrollExtent;
     double totalHeight = text.paintHeightWithTextStyle(widget.style, maxWidth: _width);
-    print('计算总高度：$totalHeight.widget的高度${totalHeight - height}');
+    print(
+        "页面可以滚动的最大距离$maxScroll,页面的高度${widget.hintHeight},$height,文本的高度$totalHeight,devicePxiel:${widget.scrollController?.position.pixels}");
     TextSelection selection = widget.controller.selection;
     int start = selection.start;
     int end = selection.end;

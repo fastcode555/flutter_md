@@ -40,7 +40,6 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
     this.textEditingController,
     this.initialValue,
     this.highlightedOptionIndex,
-    required this.offsetBuilder,
   })  : assert(displayStringForOption != null),
         assert(
           fieldViewBuilder != null || (key != null && focusNode != null && textEditingController != null),
@@ -57,7 +56,6 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
   final AutocompleteFieldViewBuilder? fieldViewBuilder;
   final FocusNode? focusNode;
   final AutocompleteOptionsViewBuilder<T> optionsViewBuilder;
-  final Offset Function() offsetBuilder;
 
   final AutocompleteOptionToString<T> displayStringForOption;
 
@@ -85,7 +83,6 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
 
 class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
   final GlobalKey _fieldKey = GlobalKey();
-  final LayerLink _optionsLayerLink = LayerLink();
   late TextEditingController _textEditingController;
   late FocusNode _focusNode;
   late final Map<Type, Action<Intent>> _actionMap;
@@ -229,19 +226,13 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
     if (_shouldShowOptions) {
       final OverlayEntry newFloatingOptions = OverlayEntry(
         builder: (BuildContext context) {
-          return CompositedTransformFollower(
-            link: _optionsLayerLink,
-            showWhenUnlinked: false,
-            offset: widget.offsetBuilder(),
-            targetAnchor: Alignment.topLeft,
-            child: AutocompleteHighlightedOption(
-              highlightIndexNotifier: _highlightedOptionIndex,
-              child: Builder(
-                builder: (BuildContext context) {
-                  print("执行重新绘制");
-                  return widget.optionsViewBuilder(context, _select, _options);
-                },
-              ),
+          return AutocompleteHighlightedOption(
+            highlightIndexNotifier: _highlightedOptionIndex,
+            child: Builder(
+              builder: (BuildContext context) {
+                print("执行重新绘制");
+                return widget.optionsViewBuilder(context, _select, _options);
+              },
             ),
           );
         },
@@ -347,17 +338,14 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
         shortcuts: _shortcuts,
         child: Actions(
           actions: _actionMap,
-          child: CompositedTransformTarget(
-            link: _optionsLayerLink,
-            child: widget.fieldViewBuilder == null
-                ? const SizedBox.shrink()
-                : widget.fieldViewBuilder!(
-                    context,
-                    _textEditingController,
-                    _focusNode,
-                    _onFieldSubmitted,
-                  ),
-          ),
+          child: widget.fieldViewBuilder == null
+              ? const SizedBox.shrink()
+              : widget.fieldViewBuilder!(
+                  context,
+                  _textEditingController,
+                  _focusNode,
+                  _onFieldSubmitted,
+                ),
         ),
       ),
     );

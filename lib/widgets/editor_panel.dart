@@ -69,6 +69,7 @@ class _EditorPanelState extends State<EditorPanel> {
               child: Stack(
                 children: [
                   AutoCompleteEditor(
+                    scrollController: _scrollController,
                     controller: widget.controller!,
                     focusNode: widget.focusNode!,
                     hintWidth: constraints.maxWidth,
