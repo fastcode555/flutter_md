@@ -176,13 +176,15 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
 
   Offset _offsetBuilder() {
     String text = widget.controller.text;
+    double height = widget.focusNode.size.height;
+    double totalHeight = text.paintHeightWithTextStyle(widget.style, maxWidth: _width);
+    print('计算总高度：$totalHeight.widget的高度${totalHeight - height}');
     TextSelection selection = widget.controller.selection;
     int start = selection.start;
     int end = selection.end;
     if (start == end) {
       String tail = text.substring(end, text.length);
       double height = tail.paintHeightWithTextStyle(widget.style, maxWidth: _width);
-      print("计算到高度$height");
       return Offset(
         widget.padding,
         height < _lineHeight ? 0 : -height + _lineHeight - ((tail.split('\n').length) * _lineHeight * 0.1),

@@ -148,11 +148,6 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
       return;
     }
     _selection = nextSelection;
-/*    final String selectionString = widget.displayStringForOption(nextSelection);
-    _textEditingController.value = TextEditingValue(
-      selection: TextSelection.collapsed(offset: selectionString.length),
-      text: selectionString,
-    );*/
     _updateActions();
     _updateOverlay();
     widget.onSelected?.call(_selection!);
@@ -238,7 +233,7 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
             link: _optionsLayerLink,
             showWhenUnlinked: false,
             offset: widget.offsetBuilder(),
-            targetAnchor: Alignment.bottomLeft,
+            targetAnchor: Alignment.topLeft,
             child: AutocompleteHighlightedOption(
               highlightIndexNotifier: _highlightedOptionIndex,
               child: Builder(
