@@ -91,8 +91,8 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
     return Stack(
       children: [
         Positioned(
-          left: widget.hintWidth,
           top: widget.focusNode.size.height / 2,
+          left: widget.hintWidth,
           child: SizedBox(
             width: _width,
             child: Material(
@@ -192,7 +192,7 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
             tipModel.template!.startsWith(_tipText) ? tipModel.template! : '${tipModel.keyword!}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           if (!tipModel.template!.startsWith(_tipText))
             Text(
@@ -207,7 +207,7 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
               textAlign: TextAlign.end,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey, fontSize: 16),
             ),
           ),
         ],
