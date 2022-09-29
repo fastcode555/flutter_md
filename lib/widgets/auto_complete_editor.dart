@@ -23,7 +23,6 @@ class AutoCompleteEditor extends StatefulWidget {
   final List<TipModel> options;
   final auto.AutocompleteFieldViewBuilder? fieldViewBuilder;
   final ValueNotifier<int> highlightedOptionIndex;
-  final ScrollController? scrollController;
 
   const AutoCompleteEditor({
     required this.controller,
@@ -35,7 +34,6 @@ class AutoCompleteEditor extends StatefulWidget {
     this.padding = 16.0,
     this.options = const [],
     this.fieldViewBuilder,
-    this.scrollController,
     required this.highlightedOptionIndex,
     this.style = const TextStyle(height: 1.1),
     Key? key,
