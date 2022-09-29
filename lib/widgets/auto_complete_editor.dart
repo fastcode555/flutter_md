@@ -55,9 +55,6 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
   ///提示选项生成的依据
   String _tipText = "";
 
-  ///筛选到的选项数量
-  int _optionCount = 0;
-
   @override
   void initState() {
     super.initState();
@@ -152,7 +149,6 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
     if (text.isEmpty) return [];
     _tipText = text;
     final list = widget.options.where((e) => _filterValue(e, text, line));
-    _optionCount = list.length;
     return list.toList();
   }
 
@@ -180,27 +176,6 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
     if (line.contains(element.template!)) return false;
     return element.template != text && element.template!.toLowerCase().startsWith(text.toLowerCase()) ||
         (element.keyword != null && element.keyword!.isNotEmpty && element.keyword!.startsWith(text.toLowerCase()));
-  }
-
-  Offset _offsetBuilder() {
-    String text = widget.controller.text;
-    double height = widget.focusNode.size.height;
-    double? maxScroll = widget.scrollController?.position.maxScrollExtent;
-    double totalHeight = text.paintHeightWithTextStyle(widget.style, maxWidth: _width);
-    print(
-        "页面可以滚动的最大距离$maxScroll,页面的高度${widget.hintHeight},$height,文本的高度$totalHeight,devicePxiel:${widget.scrollController?.position.pixels}");
-    TextSelection selection = widget.controller.selection;
-    int start = selection.start;
-    int end = selection.end;
-    if (start == end) {
-      String tail = text.substring(end, text.length);
-      double height = tail.paintHeightWithTextStyle(widget.style, maxWidth: _width);
-      return Offset(
-        widget.padding,
-        height < _lineHeight ? 0 : -height + _lineHeight - ((tail.split('\n').length) * _lineHeight * 0.1),
-      );
-    }
-    return Offset.zero;
   }
 
   ///创建Item
