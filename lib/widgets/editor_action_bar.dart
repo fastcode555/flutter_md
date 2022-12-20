@@ -5,8 +5,7 @@ import 'package:flutter_md/res/strings.dart';
 import '../model/edit_action_model.dart';
 import '../res/r.dart';
 import 'canet_button.dart';
-import 'colour_widget.dart';
-import 'poup/poup_manager.dart';
+import 'font_color_button.dart';
 
 /// @date 16/9/22
 /// describe:标签器的功能栏
@@ -62,7 +61,7 @@ class _EditorActionBarState extends State<EditorActionBar> {
                 onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.lineThrough),
                 icon: Image.asset(R.icTextDelete, color: context.primaryColor),
               ),
-              _FontColorButton(notifier: widget.notifier),
+              FontColorButton(notifier: widget.notifier),
               IconButton(
                 onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.background),
                 icon: const Icon(Icons.format_color_fill),
@@ -140,48 +139,6 @@ class __PanelVisibleWidgetState extends State<_PanelVisibleWidget> {
             icon: Image.asset(R.icMdEye, color: context.primaryColor),
           ),
       ],
-    );
-  }
-}
-
-///颜色按钮
-class _FontColorButton extends StatelessWidget {
-  final ValueNotifier<EditActionModel?>? notifier;
-
-  const _FontColorButton({this.notifier, Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    bool isShow = false;
-    return MouseRegion(
-      onEnter: (_) {
-        print("onExit");
-        if (isShow) return;
-        isShow = true;
-        showPoup(
-          context,
-          child: ColourWidget(
-            onTap: (color) {
-              notifier?.value = EditActionModel(action: EditActionModel.font, content: color);
-              Get.pop();
-            },
-          ),
-          constraints: const BoxConstraints(maxWidth: 200),
-        );
-      },
-      onHover: (_) {
-        print("isHover");
-      },
-      onExit: (_) {
-        print("onExit");
-        if (isShow) {
-          isShow = false;
-        }
-      },
-      child: IconButton(
-        onPressed: () => notifier?.value = EditActionModel(action: EditActionModel.font, content: "red"),
-        icon: const Icon(Icons.format_color_text),
-      ),
     );
   }
 }

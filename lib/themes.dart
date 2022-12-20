@@ -1,4 +1,3 @@
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
 const String _key = 'theme_color_key';
@@ -7,10 +6,8 @@ const String _bgKey = 'theme_color_bg_key';
 class Themes {
   ///创建主题颜色
   static ThemeData theme([bool isDark = false]) {
-    String fontFamily = CommonConfig.instance.systemFontFamily;
     ThemeData _theme = ThemeData(
       brightness: isDark ? Brightness.dark : Brightness.light,
-      fontFamily: fontFamily,
     );
     Color themeColor = Colors.red;
 
@@ -26,7 +23,7 @@ class Themes {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           primary: themeColor,
-          textStyle: TextStyle(color: themeColor, fontFamily: fontFamily),
+          textStyle: TextStyle(color: themeColor),
         ),
       ),
       iconTheme: IconThemeData(color: themeColor),

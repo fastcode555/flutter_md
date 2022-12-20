@@ -24,20 +24,10 @@ class AppPages {
   static GetPage _page({
     required String name,
     required GetPageBuilder page,
-    bool transparentRoute = false,
     Bindings? binding,
     Transition? transition,
     CustomTransition? customTransition,
   }) {
-    if (transparentRoute) {
-      return TransparentRoute(
-        name: name,
-        binding: binding,
-        transition: transition ?? Transition.downToUp,
-        page: page,
-      );
-    }
-
     return GetPage(
       name: name,
       binding: binding,

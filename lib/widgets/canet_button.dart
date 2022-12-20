@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:xdlibrary/xdlibrary.dart';
 
-import 'poup/poup_manager.dart';
 import 'special_caret_widget.dart';
 
 /// @date 20/9/22
@@ -8,23 +8,26 @@ import 'special_caret_widget.dart';
 ///特殊符号的按钮
 class CaretButton extends StatelessWidget {
   final ValueChanged<String> onTap;
+  final HoverController _hoverController = HoverController();
 
-  const CaretButton({required this.onTap, Key? key}) : super(key: key);
+  CaretButton({required this.onTap, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isShow = false;
-    return MouseRegion(
-      onEnter: (_) {
-        if (isShow) return;
-        isShow = true;
-        showPoup(context, child: SpecialCaretWidget(onTap: onTap));
-      },
-      onExit: (_) {
-        if (isShow) {
-          isShow = false;
-        }
-      },
+    return OverlayHover(
+      controller: _hoverController,
+      hoverWidget: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: const [BoxShadow(color: Colors.black38, offset: Offset(0, 3), blurRadius: 10)],
+        ),
+        child: SpecialCaretWidget(onTap: (model) {
+          onTap(model);
+          _hoverController.hide();
+        }),
+      ),
       child: IconButton(
         icon: const Icon(Icons.format_quote_outlined),
         onPressed: () {},

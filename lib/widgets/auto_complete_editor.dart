@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
@@ -213,27 +214,44 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
     );
   }
 
-  void _onSelected(TipModel tipModel) {
+  void _onSelected(TipModel? tipModel) {
+    if (tipModel == null) {
+      TextSelection selection = widget.controller.selection;
+      int start = selection.start;
+      int end = selection.end;
+      if (start == end) {
+        String content = widget.controller.text;
+        String header = content.substring(0, start);
+        String tail = content.substring(start, content.length);
+        header = '$header\n';
+        widget.controller.text = '$header$tail';
+        widget.controller.selection = EditUtils.createTextSelection(header);
+      }
+      return;
+    }
+
     String content = widget.controller.text;
     TextSelection selection = widget.controller.selection;
     int start = selection.start;
     String header = content.substring(0, start);
     String tail = content.substring(start, content.length);
     if (tipModel.template!.toLowerCase().startsWith(_tipText.toLowerCase()) ||
+        tipModel.keyword == null ||
         tipModel.keyword!.toLowerCase().startsWith(_tipText.toLowerCase())) {
       String newHeader = header.replaceRange(start - _tipText.length, start, tipModel.template!);
       widget.controller.text = "$newHeader$tail";
       //如果有指定从哪个位置开始，就指定位置
       if (tipModel.start != null) {
+        int offset = min((header.length - _tipText.length) + tipModel.start!, widget.controller.text.length);
         widget.controller.selection = TextSelection.fromPosition(
-          TextPosition(affinity: TextAffinity.upstream, offset: (header.length - _tipText.length) + tipModel.start!),
+          TextPosition(affinity: TextAffinity.upstream, offset: offset),
         );
       } else {
         widget.controller.selection = TextSelection.fromPosition(
           TextPosition(affinity: TextAffinity.upstream, offset: newHeader.length),
         );
       }
-      Future.delayed(const Duration(milliseconds: 10), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         TextSelection selection = widget.controller.selection;
         int start = selection.start;
         int end = selection.end;
