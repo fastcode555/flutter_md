@@ -160,6 +160,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.0"
+  flutter_launcher_icons_maker:
+    dependency: "direct dev"
+    description:
+      name: flutter_launcher_icons_maker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -601,7 +608,7 @@ packages:
       path: "../../flutter_plugins/xdlibrary"
       relative: true
     source: path
-    version: "1.1.2"
+    version: "1.1.3"
   xml:
     dependency: transitive
     description:
@@ -609,6 +616,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.0"
+  yaml:
+    dependency: transitive
+    description:
+      name: yaml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1"
 sdks:
   dart: ">=2.18.0 <3.0.0"
   flutter: ">=3.3.0"
