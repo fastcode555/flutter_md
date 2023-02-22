@@ -43,6 +43,7 @@ class _TextDemoState extends State<TextDemo> {
     '\$Flutter\$. CN dev best dev',
     '\$Dota2 Ti9\$. Shanghai,I\'m coming.',
     'error 0 [45] warning 0',
+    '<img src="https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&cs=tinysrgb&w=800"/>',
   ];
 
   @override

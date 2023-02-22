@@ -6,39 +6,28 @@ import 'package:html/dom.dart' hide Text;
 import 'package:html/parser.dart';
 
 class ImageText extends SpecialText {
-  ImageText(TextStyle? textStyle,
-      {this.start, SpecialTextGestureTapCallback? onTap})
-      : super(
-          ImageText.flag,
-          '/>',
-          textStyle,
-          onTap: onTap,
-        );
+  ImageText(
+    TextStyle? textStyle, {
+    this.start,
+    SpecialTextGestureTapCallback? onTap,
+  }) : super(ImageText.flag, '/>', textStyle, onTap: onTap);
 
   static const String flag = '<img';
   final int? start;
   String? _imageUrl;
+
   String? get imageUrl => _imageUrl;
+
   @override
   InlineSpan finishText() {
-    ///content already has endflag '/'
     final String text = toString();
 
-    ///'<img src='$url'/>'
-//    var index1 = text.indexOf(''') + 1;
-//    var index2 = text.indexOf(''', index1);
-//
-//    var url = text.substring(index1, index2);
-//
-    ////'<img src='$url' width='${item.imageSize.width}' height='${item.imageSize.height}'/>'
     final Document html = parse(text);
 
     final Element img = html.getElementsByTagName('img').first;
     final String url = img.attributes['src']!;
     _imageUrl = url;
 
-    //fontsize id define image height
-    //size = 30.0/26.0 * fontSize
     double? width = 60.0;
     double? height = 60.0;
     const BoxFit fit = BoxFit.cover;
@@ -49,8 +38,8 @@ class ImageText extends SpecialText {
     width = num400;
     const bool knowImageSize = true;
     if (knowImageSize) {
-      height = double.tryParse(img.attributes['height']!);
-      width = double.tryParse(img.attributes['width']!);
+      height = double.tryParse(img.attributes['height'] ?? '60');
+      width = double.tryParse(img.attributes['width'] ?? '80');
       final double n = height! / width!;
       if (n >= 4 / 3) {
         width = num300;
@@ -65,21 +54,13 @@ class ImageText extends SpecialText {
       }
     }
 
-    ///fontSize 26 and text height =30.0
-    //final double fontSize = 26.0;
-
     return ExtendedWidgetSpan(
-        start: start!,
-        actualText: text,
-        child: GestureDetector(
-            onTap: () {
-              onTap?.call(url);
-            },
-            child: Image.network(
-              url,
-              width: width,
-              height: height,
-              fit: fit,
-            )));
+      start: start!,
+      actualText: text,
+      child: GestureDetector(
+        onTap: () => onTap?.call(url),
+        child: Image.network(url, width: width, height: height, fit: fit),
+      ),
+    );
   }
 }

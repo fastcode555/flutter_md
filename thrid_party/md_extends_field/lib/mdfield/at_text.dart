@@ -24,21 +24,13 @@ class AtText extends SpecialText {
             start: start!,
             deleteAll: true,
             style: textStyle,
-            recognizer: (TapGestureRecognizer()
-              ..onTap = () {
-                onTap?.call(atText);
-              }))
+            recognizer: (TapGestureRecognizer()..onTap = () => onTap?.call(atText)))
         : SpecialTextSpan(
             text: atText,
             actualText: atText,
             start: start!,
             style: textStyle,
-            recognizer: (TapGestureRecognizer()
-              ..onTap = () {
-                if (onTap != null) {
-                  onTap!(atText);
-                }
-              }));
+            recognizer: (TapGestureRecognizer()..onTap = () => onTap?.call(atText)));
   }
 }
 
