@@ -47,6 +47,12 @@ class _TextDemoState extends State<TextDemo> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _textEditingController.text = sessions.join(',\n');
+  }
+
+  @override
   Widget build(BuildContext context) {
     //FocusScope.of(context).autofocus(_focusNode);
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
@@ -116,7 +122,7 @@ class _TextDemoState extends State<TextDemo> {
               minLines: 1,
               maxLines: 2,
               strutStyle: const StrutStyle(),
-              specialTextSpanBuilder: MySpecialTextSpanBuilder(showAtBackground: true),
+              specialTextSpanBuilder: MySpecialTextSpanBuilder(showAtBackground: false),
               controller: _textEditingController,
               selectionControls: _myExtendedMaterialTextSelectionControls,
               focusNode: _focusNode,
