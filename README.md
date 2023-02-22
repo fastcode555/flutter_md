@@ -1,8 +1,6 @@
 # flutter_md
 Flutter Markdown 的编辑器
 
-PS：<font color=red>本地图片不支持，主要是没有权限。（如果有权限，是可以显示的）</font>
-
 # 功能描述
 - 支持常用的markdown'标签提示
 - 支持自动增加一些字符的功能
