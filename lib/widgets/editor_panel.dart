@@ -23,13 +23,12 @@ class EditorPanel extends StatefulWidget {
   final FocusNode? focusNode;
 
   const EditorPanel({
-    super.key,
+    required this.file, super.key,
     this.autofocus = false,
     this.autoEmpty = false,
     this.controller,
     this.notifier,
     this.actionNotifier,
-    required this.file,
     this.focusNode,
   });
 
@@ -102,7 +101,7 @@ class _EditorPanelState extends State<EditorPanel> {
 
   ///监听滚动进度的变化
   void _metricsChangedListener(ScrollMetrics value) {
-    double progress = ((value.pixels / value.maxScrollExtent) * 100.toDouble());
+    var progress = ((value.pixels / value.maxScrollExtent) * 100.toDouble());
     progress = progress < 0 ? 0 : (progress > 100 ? 100 : progress);
     widget.notifier?.value = progress.toStringAsFixed(2);
   }
@@ -110,8 +109,8 @@ class _EditorPanelState extends State<EditorPanel> {
   ///响应操作栏的状态变化
   void _barActionCallBack() {
     if (_actionNotifier.value != null && widget.controller != null) {
-      EditActionModel model = _actionNotifier.value!;
-      for (int action in [
+      var model = _actionNotifier.value!;
+      for (var action in [
         EditActionModel.splitScreen,
         EditActionModel.justShow,
         EditActionModel.save,
@@ -122,18 +121,18 @@ class _EditorPanelState extends State<EditorPanel> {
         }
       }
 
-      TextEditingController controller = widget.controller!;
-      int start = controller.selection.start;
-      int end = controller.selection.end;
-      String content = controller.text;
-      String selectTxt = content.substring(start, end);
+      var controller = widget.controller!;
+      var start = controller.selection.start;
+      var end = controller.selection.end;
+      var content = controller.text;
+      var selectTxt = content.substring(start, end);
       if (start == end) {
-        String header = content.substring(0, start);
-        String tail = content.substring(start, content.length);
+        var header = content.substring(0, start);
+        var tail = content.substring(start, content.length);
         if (model.action == EditActionModel.insert) {
-          String header = content.substring(0, start);
-          String tail = content.substring(start, content.length);
-          String newHeader = "$header${model.content}";
+          var header = content.substring(0, start);
+          var tail = content.substring(start, content.length);
+          var newHeader = "$header${model.content}";
           controller.text = "$newHeader$tail";
           controller.selection = EditUtils.createTextSelection(newHeader);
         } else if (model.action == EditActionModel.insertLink) {
@@ -141,21 +140,21 @@ class _EditorPanelState extends State<EditorPanel> {
         } else if (model.action == EditActionModel.insertImage) {
           _insertImage(header, tail);
         } else if (model.action == EditActionModel.insertDelimiter) {
-          header = "$header\n-------------------------------------\n";
+          header = '$header\n-------------------------------------\n';
           controller.text = '$header$tail';
           controller.selection = EditUtils.createTextSelection(header);
         } else if (model.action == EditActionModel.newLine) {
-          header = "$header<br/>";
+          header = '$header<br/>';
           controller.text = '$header$tail';
           controller.selection = EditUtils.createTextSelection(header);
         } else if (model.action == EditActionModel.font) {
-          String newHeader = "$header<font color=${model.content}>";
-          String newTail = "</font>$tail";
+          var newHeader = '$header<font color=${model.content}>';
+          var newTail = '</font>$tail';
           controller.text = "$newHeader$newTail";
           controller.selection = EditUtils.createTextSelection(newHeader);
         } else if (model.action == EditActionModel.underline) {
-          String newHeader = "$header<u>";
-          String newTail = "</u>$tail";
+          var newHeader = '$header<u>';
+          var newTail = '</u>$tail';
           controller.text = "$newHeader$newTail";
           controller.selection = EditUtils.createTextSelection(newHeader);
         } else if (model.action == EditActionModel.bold) {
@@ -166,21 +165,21 @@ class _EditorPanelState extends State<EditorPanel> {
           _createMarkTextStyle('~~', header, tail, controller);
         }
       } else if (model.action == EditActionModel.bold) {
-        controller.text = content.replaceRange(start, end, "**${content.substring(start, end)}**");
+        controller.text = content.replaceRange(start, end, '**${content.substring(start, end)}**');
       } else if (model.action == EditActionModel.italic) {
-        controller.text = content.replaceRange(start, end, "*${content.substring(start, end)}*");
+        controller.text = content.replaceRange(start, end, '*${content.substring(start, end)}*');
       } else if (model.action == EditActionModel.underline) {
-        controller.text = content.replaceRange(start, end, "<u>${content.substring(start, end)}</u>");
+        controller.text = content.replaceRange(start, end, '<u>${content.substring(start, end)}</u>');
       } else if (model.action == EditActionModel.font) {
-        String fontContent = "<font color=${model.content}>${content.substring(start, end)}</font>";
+        var fontContent = '<font color=${model.content}>${content.substring(start, end)}</font>';
         controller.text = content.replaceRange(start, end, fontContent);
       } else if (model.action == EditActionModel.lineThrough) {
-        controller.text = content.replaceRange(start, end, "~~${content.substring(start, end)}~~");
+        controller.text = content.replaceRange(start, end, '~~${content.substring(start, end)}~~');
       } else if (model.action == EditActionModel.insertLink) {
-        controller.text = content.replaceRange(start, end, "[]($selectTxt)");
+        controller.text = content.replaceRange(start, end, '[]($selectTxt)');
         controller.selection = EditUtils.lengthSelection(start + 1);
       } else if (model.action == EditActionModel.insertImage) {
-        String mdString = "![Alt]($selectTxt)";
+        var mdString = '![Alt]($selectTxt)';
         controller.text = content.replaceRange(start, end, mdString);
         controller.selection = EditUtils.lengthSelection(start + mdString.length);
       }
@@ -192,8 +191,8 @@ class _EditorPanelState extends State<EditorPanel> {
 
   ///创建markdown文本的文件的风格
   void _createMarkTextStyle(String symbol, String header, String tail, TextEditingController controller) {
-    String newHeader = "$header$symbol";
-    String newTail = "$symbol$tail";
+    var newHeader = "$header$symbol";
+    var newTail = "$symbol$tail";
     controller.text = "$newHeader$newTail";
     controller.selection = EditUtils.createTextSelection(newHeader);
   }
@@ -212,8 +211,8 @@ class _EditorPanelState extends State<EditorPanel> {
           Center(
             child: InsertLinkDialog(
               callback: (String desc, String content) {
-                String newHeader = desc.isNotEmpty ? "$header[$desc]($content)" : "$header[";
-                String newTail = desc.isEmpty ? "]($content)$tail" : tail;
+                var newHeader = desc.isNotEmpty ? '$header[$desc]($content)' : '$header[';
+                var newTail = desc.isEmpty ? ']($content)$tail' : tail;
                 widget.controller?.text = "$newHeader$newTail";
                 widget.controller?.selection = EditUtils.createTextSelection(newHeader);
               },
@@ -232,7 +231,7 @@ class _EditorPanelState extends State<EditorPanel> {
           Center(
             child: InsertImageDialog(
               callback: (String desc, String content) {
-                String newHeader = "$header$desc($content)";
+                var newHeader = "$header$desc($content)";
                 widget.controller?.text = "$newHeader$tail";
                 widget.controller?.selection = EditUtils.createTextSelection(newHeader);
               },

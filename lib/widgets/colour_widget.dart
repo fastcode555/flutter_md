@@ -10,7 +10,7 @@ class ColourWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> keys = Utils.colors.keys.toList();
+    var keys = Utils.colors.keys.toList();
     return SizedBox(
       width: 200,
       child: GridView.builder(
@@ -23,7 +23,7 @@ class ColourWidget extends StatelessWidget {
         ),
         itemCount: keys.length,
         itemBuilder: (_, index) {
-          String key = keys[index];
+          var key = keys[index];
           return GestureDetector(
             child: Container(color: Utils.colors[key]),
             onTap: () => onTap.call(key),

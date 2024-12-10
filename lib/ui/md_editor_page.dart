@@ -16,7 +16,7 @@ class MdEditorPage extends StatefulWidget {
   final File? file;
   final String? tag;
   final CreateFileCallback? callBack;
-  static const String routeName = "/widgets/md_editor_page";
+  static const String routeName = '/widgets/md_editor_page';
 
   const MdEditorPage({this.file, this.tag, this.callBack, super.key});
 
@@ -70,7 +70,6 @@ class _MdEditorPageState extends State<MdEditorPage> {
                     child: EditorPanel(
                       file: _file,
                       controller: _controller,
-                      autofocus: false,
                       notifier: _notifier,
                       actionNotifier: _actionNotifier,
                       focusNode: _focusNode,
@@ -97,26 +96,26 @@ class _MdEditorPageState extends State<MdEditorPage> {
               ValueListenableBuilder<String>(
                 valueListenable: _notifier,
                 builder: (_, data, __) {
-                  return Text(data == '0.00' ? "" : '$data% ', textAlign: TextAlign.end);
+                  return Text(data == '0.00' ? '' : '$data% ', textAlign: TextAlign.end);
                 },
               ),
               const SizedBox(width: 6),
               ValueListenableBuilder<TextEditingValue>(
                 valueListenable: _controller,
                 builder: (_, data, __) {
-                  String selectedText = "";
-                  TextSelection selection = _controller.selection;
-                  int start = selection.start;
-                  int end = selection.end;
+                  var selectedText = '';
+                  var selection = _controller.selection;
+                  var start = selection.start;
+                  var end = selection.end;
                   if (start != end) {
-                    selectedText = _controller.text.substring(start, end).replaceAll("\n", "").replaceAll(" ", "");
+                    selectedText = _controller.text.substring(start, end).replaceAll('\n', '').replaceAll(' ', '');
                   }
-                  int totalLength = _controller.text.replaceAll("\n", "").replaceAll(" ", "").length;
+                  var totalLength = _controller.text.replaceAll('\n', '').replaceAll(' ', '').length;
                   return Row(
                     children: [
-                      if (start != end) Text("select: ${selectedText.length}  "),
-                      if (start != end) Text("unselect: ${totalLength - selectedText.length}  "),
-                      Text("total: $totalLength"),
+                      if (start != end) Text('select: ${selectedText.length}  '),
+                      if (start != end) Text('unselect: ${totalLength - selectedText.length}  '),
+                      Text('total: $totalLength'),
                     ],
                   );
                 },
@@ -131,7 +130,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
 
   ///监听面板变化
   void _listenerPanelChanged() {
-    EditActionModel? model = _actionNotifier.value;
+    var model = _actionNotifier.value;
     if (model == null) return;
     if (model.action == EditActionModel.splitScreen) {
       if (!_isEdit) {
@@ -161,7 +160,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
   ///保存文件
   void _saveFile() async {
     if (_file == null) {
-      String? outputFile = await FilePicker.platform.saveFile(
+      var outputFile = await FilePicker.platform.saveFile(
         dialogTitle: Ids.pleaseSelectAnOutputFile.tr,
         fileName: widget.tag ?? 'NewFile.md',
       );
@@ -176,12 +175,12 @@ class _MdEditorPageState extends State<MdEditorPage> {
 
   ///另存文件为
   void _saveAsFile() async {
-    String? outputFile = await FilePicker.platform.saveFile(
+    var outputFile = await FilePicker.platform.saveFile(
       dialogTitle: Ids.pleaseSelectAnOutputFile.tr,
       fileName: widget.tag ?? 'NewFile.md',
     );
     if (outputFile != null) {
-      File file = File(outputFile);
+      var file = File(outputFile);
       file.writeAsString(_controller.text);
       _file ??= file;
     }

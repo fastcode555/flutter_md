@@ -46,11 +46,11 @@ class _InsertImageDialogState extends State<InsertImageDialog> {
                 IconButton(
                   icon: const Icon(Icons.image),
                   onPressed: () async {
-                    FilePickerResult? file = await FilePicker.platform
+                    var file = await FilePicker.platform
                         .pickFiles(dialogTitle: Ids.pleaseSelectImage.tr, type: FileType.image);
                     if (file != null && file.files.isNotEmpty) {
-                      PlatformFile platformFile = file.files[0];
-                      _linkController.text = platformFile.path ?? "";
+                      var platformFile = file.files[0];
+                      _linkController.text = platformFile.path ?? '';
                       _confirm();
                     }
                   },

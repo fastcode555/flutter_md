@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/painting/text_span.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:highlight/highlight.dart' show highlight, Node;
@@ -16,12 +15,12 @@ class CustomSyntaxHightlighter extends SyntaxHighlighter {
 
   @override
   TextSpan format(String source) {
-    var _textStyle = TextStyle(
+    var textStyle = TextStyle(
       fontFamily: 'monospace',
       color: _theme['root']?.color ?? const Color(0xffffffff),
     );
     return TextSpan(
-      style: _textStyle,
+      style: textStyle,
       children: _convert(highlight.parse(source, language: 'dart').nodes!),
     );
   }
@@ -31,7 +30,7 @@ class CustomSyntaxHightlighter extends SyntaxHighlighter {
     var currentSpans = spans;
     List<List<TextSpan>> stack = [];
 
-    _traverse(Node node) {
+    traverse(Node node) {
       if (node.value != null) {
         currentSpans.add(node.className == null
             ? TextSpan(text: node.value)
@@ -42,17 +41,17 @@ class CustomSyntaxHightlighter extends SyntaxHighlighter {
         stack.add(currentSpans);
         currentSpans = tmp;
 
-        node.children!.forEach((n) {
-          _traverse(n);
+        for (var n in node.children!) {
+          traverse(n);
           if (n == node.children!.last) {
             currentSpans = stack.isEmpty ? spans : stack.removeLast();
           }
-        });
+        }
       }
     }
 
     for (var node in nodes) {
-      _traverse(node);
+      traverse(node);
     }
     return spans;
   }

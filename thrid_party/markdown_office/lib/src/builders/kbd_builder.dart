@@ -16,7 +16,7 @@ class _KbdBuilderWidget extends StatelessWidget {
   final md.Element element;
   final TextStyle? preferredStyle;
 
-  const _KbdBuilderWidget(this.element, {this.preferredStyle, Key? key}) : super(key: key);
+  const _KbdBuilderWidget(this.element, {this.preferredStyle});
 
   @override
   Widget build(BuildContext context) {

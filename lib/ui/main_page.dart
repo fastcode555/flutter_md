@@ -9,12 +9,12 @@ import '../res/r.dart';
 import '../widgets/hover_widget.dart';
 import 'md_editor_page.dart';
 
-const _lastOpenFileKey = "Last_Open_File_Key";
+const _lastOpenFileKey = 'Last_Open_File_Key';
 
 /// @date 23/9/22
 /// describe:
 class MainPage extends StatefulWidget {
-  static const String routeName = "/ui/main_page";
+  static const String routeName = '/ui/main_page';
 
   const MainPage({super.key});
 
@@ -34,13 +34,13 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     super.initState();
     count = Gs.read<int>(runtimeType.toString()) ?? 1;
     //读取上次打开的文件
-    List<String> files = Gs.readList<String>(_lastOpenFileKey) ?? _recordLastOpenFiles;
+    var files = Gs.readList<String>(_lastOpenFileKey) ?? _recordLastOpenFiles;
     if (files.isNotEmpty) {
-      for (String path in files) {
+      for (var path in files) {
         try {
-          File file = File(path);
+          var file = File(path);
           if (file.existsSync()) {
-            String content = file.readAsStringSync();
+            var content = file.readAsStringSync();
             print(content);
             _items.add(file.path);
           }
@@ -73,13 +73,13 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
               IconButton(
                 tooltip: Ids.openFile.tr,
                 onPressed: () async {
-                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  var result = await FilePicker.platform.pickFiles(
                     dialogTitle: Ids.pleaseSelectTheRequiredMarkdownFile.tr,
                     type: FileType.custom,
-                    allowedExtensions: ["md"],
+                    allowedExtensions: ['md'],
                   );
                   if (result != null && result.files.isNotEmpty) {
-                    String? path = result.files[0].path;
+                    var path = result.files[0].path;
                     if (path != null && !_items.contains(path)) {
                       _items.add(path);
                       setState(() {});
@@ -156,14 +156,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     if (file != null) {
       return file.name;
     }
-    return "$item*";
+    return '$item*';
   }
 
   ///创建页面
   Widget _buildTabPage(int index, String item) {
-    File file = File(item);
+    var file = File(item);
     if (!file.existsSync()) {
-      File? newFile = _fileMaps[item];
+      var newFile = _fileMaps[item];
       return MdEditorPage(
         file: newFile,
         key: ValueKey(item),
@@ -189,7 +189,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   ///保存上次打开的文件
   void _saveLastOpen() {
     _recordLastOpenFiles.clear();
-    for (String path in _items) {
+    for (var path in _items) {
       File? file = File(path);
       if (file.existsSync()) {
         _recordLastOpenFiles.add(file.path);

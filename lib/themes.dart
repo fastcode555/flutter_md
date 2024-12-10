@@ -6,7 +6,7 @@ const String _bgKey = 'theme_color_bg_key';
 class Themes {
   ///创建主题颜色
   static ThemeData theme([bool isDark = false]) {
-    ThemeData _theme = ThemeData(
+    var _theme = ThemeData(
       brightness: isDark ? Brightness.dark : Brightness.light,
     );
     Color themeColor = Colors.red;
@@ -51,7 +51,7 @@ class Themes {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(themeColor),
+          backgroundColor: WidgetStateProperty.all<Color>(themeColor),
         ),
       ),
     );

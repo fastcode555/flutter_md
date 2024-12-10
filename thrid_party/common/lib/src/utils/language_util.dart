@@ -23,10 +23,10 @@ class LanguageUtil {
     List<LanguageModel> list = languages;
     if (model.isSystem()) {
       _selectLanguage = model;
-      LanguageModel _lang = getLocaleFromDevice();
-      CoreConfig.lang = _lang.languageCode;
+      LanguageModel lang = getLocaleFromDevice();
+      CoreConfig.lang = lang.languageCode;
       Gs.write(_key, model);
-      Get.updateLocale(_lang.toLocale());
+      Get.updateLocale(lang.toLocale());
     } else {
       if (list.contains(model)) {
         _selectLanguage = model;
@@ -71,9 +71,9 @@ class LanguageUtil {
 
     //首次设置，使用系统的，没有再默认英文
     if (selectLanguage == null) {
-      LanguageModel _lang = getLocaleFromDevice();
-      setLocalModel(_lang);
-      return _lang;
+      LanguageModel lang = getLocaleFromDevice();
+      setLocalModel(lang);
+      return lang;
     } else {
       CoreConfig.lang = selectLanguage.languageCode;
     }

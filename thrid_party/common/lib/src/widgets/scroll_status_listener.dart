@@ -15,8 +15,8 @@ class ScrollStatusListener extends StatelessWidget {
     required this.child,
     this.scrollEndListener,
     this.metricsChangedListener,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

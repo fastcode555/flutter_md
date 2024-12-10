@@ -10,8 +10,7 @@ class HoverWidget extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
 
   const HoverWidget.animation({
-    Key? key,
-    required this.builder,
+    required this.builder, Key? key,
     this.decoration,
     this.hoverDecoration,
     this.padding,
@@ -19,8 +18,7 @@ class HoverWidget extends StatefulWidget {
         super(key: key);
 
   const HoverWidget({
-    Key? key,
-    required this.builder,
+    required this.builder, Key? key,
     this.decoration,
     this.hoverDecoration,
     this.padding,
@@ -38,7 +36,7 @@ class _OnHoverState extends State<HoverWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.animation) {
-      hovered ??= Matrix4.identity()..translate(0, -10, 0);
+      hovered ??= Matrix4.identity()..translate(0, -10);
     }
     return MouseRegion(
       onEnter: (_) => onEntered(true),

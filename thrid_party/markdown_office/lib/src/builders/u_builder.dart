@@ -15,7 +15,7 @@ class _UBuilderWidget extends StatelessWidget {
   final md.Element element;
   final TextStyle? preferredStyle;
 
-  const _UBuilderWidget(this.element, {this.preferredStyle, Key? key}) : super(key: key);
+  const _UBuilderWidget(this.element, {this.preferredStyle});
 
   @override
   Widget build(BuildContext context) {

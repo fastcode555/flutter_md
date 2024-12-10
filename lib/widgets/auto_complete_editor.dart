@@ -28,14 +28,13 @@ class AutoCompleteEditor extends StatefulWidget {
   const AutoCompleteEditor({
     required this.controller,
     required this.focusNode,
-    this.maxShowCount = 15,
+    required this.highlightedOptionIndex, this.maxShowCount = 15,
     this.itemHeight = 40.0,
     this.hintWidth = 300,
     this.hintHeight = 300,
     this.padding = 16.0,
     this.options = const [],
     this.fieldViewBuilder,
-    required this.highlightedOptionIndex,
     this.style = const TextStyle(height: 1.1),
     Key? key,
   }) : super(key: key);
@@ -52,12 +51,12 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
   double _width = 0.0;
 
   ///提示选项生成的依据
-  String _tipText = "";
+  String _tipText = '';
 
   @override
   void initState() {
     super.initState();
-    _lineHeight = "\n".paintHeightWithTextStyle(widget.style);
+    _lineHeight = '\n'.paintHeightWithTextStyle(widget.style);
     _width = widget.hintWidth - widget.padding * 2;
   }
 
@@ -66,7 +65,7 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
     super.didUpdateWidget(oldWidget);
     if (widget.hintWidth != oldWidget.hintWidth || widget.padding != oldWidget.padding) {
       _width = widget.hintWidth - widget.padding * 2;
-      print("页面的宽度$_width,页面的高度${widget.hintHeight}");
+      print('页面的宽度$_width,页面的高度${widget.hintHeight}');
     }
   }
 
@@ -112,9 +111,7 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
                         itemBuilder: (BuildContext context, int index) {
                           TipModel tipModel = options.elementAt(index);
                           return GestureDetector(
-                            onTap: () {
-                              _onSelected(tipModel);
-                            },
+                            onTap: () => _onSelected(tipModel),
                             child: _buildItem(tipModel, index, context),
                           );
                         },
@@ -133,15 +130,15 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
 
   ///获取符合筛选条件的备选项
   FutureOr<Iterable<TipModel>> _optionsBuilder(TextEditingValue textEditingValue) {
-    String text = textEditingValue.text;
+    var text = textEditingValue.text;
     if (text.isEmpty || text.trim().isEmpty) return [];
-    int start = widget.controller.selection.start;
-    int end = widget.controller.selection.end;
+    var start = widget.controller.selection.start;
+    var end = widget.controller.selection.end;
     if (start != end || start < 0) return [];
-    String line = text.substring(0, start).split('\n').last + text.substring(start, text.length).split("\n").first;
+    var line = text.substring(0, start).split('\n').last + text.substring(start, text.length).split('\n').first;
 
     text = text.substring(0, start);
-    text = text.split("\n").last;
+    text = text.split('\n').last;
     if (text.contains(' ')) {
       text = text.split(' ').last;
     }
@@ -179,7 +176,7 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
 
   ///创建Item
   Widget _buildItem(TipModel tipModel, int index, BuildContext context) {
-    int selectIndex = widget.highlightedOptionIndex.value;
+    var selectIndex = widget.highlightedOptionIndex.value;
     return Container(
       height: widget.itemHeight,
       alignment: Alignment.centerLeft,
@@ -216,13 +213,13 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
 
   void _onSelected(TipModel? tipModel) {
     if (tipModel == null) {
-      TextSelection selection = widget.controller.selection;
-      int start = selection.start;
-      int end = selection.end;
+      var selection = widget.controller.selection;
+      var start = selection.start;
+      var end = selection.end;
       if (start == end) {
-        String content = widget.controller.text;
-        String header = content.substring(0, start);
-        String tail = content.substring(start, content.length);
+        var content = widget.controller.text;
+        var header = content.substring(0, start);
+        var tail = content.substring(start, content.length);
         header = '$header\n';
         widget.controller.text = '$header$tail';
         widget.controller.selection = EditUtils.createTextSelection(header);
@@ -230,15 +227,15 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
       return;
     }
 
-    String content = widget.controller.text;
-    TextSelection selection = widget.controller.selection;
-    int start = selection.start;
-    String header = content.substring(0, start);
-    String tail = content.substring(start, content.length);
+    var content = widget.controller.text;
+    var selection = widget.controller.selection;
+    var start = selection.start;
+    var header = content.substring(0, start);
+    var tail = content.substring(start, content.length);
     if (tipModel.template!.toLowerCase().startsWith(_tipText.toLowerCase()) ||
         tipModel.keyword == null ||
         tipModel.keyword!.toLowerCase().startsWith(_tipText.toLowerCase())) {
-      String newHeader = header.replaceRange(start - _tipText.length, start, tipModel.template!);
+      var newHeader = header.replaceRange(start - _tipText.length, start, tipModel.template!);
       widget.controller.text = "$newHeader$tail";
       //如果有指定从哪个位置开始，就指定位置
       if (tipModel.start != null) {
@@ -252,16 +249,16 @@ class _AutoCompleteEditorState extends State<AutoCompleteEditor> {
         );
       }
       Future.delayed(const Duration(milliseconds: 100), () {
-        TextSelection selection = widget.controller.selection;
-        int start = selection.start;
-        int end = selection.end;
+        var selection = widget.controller.selection;
+        var start = selection.start;
+        var end = selection.end;
         if (start == end) {
-          String content = widget.controller.text;
-          String header = content.substring(0, start);
-          if (header.endsWith("\n")) {
+          var content = widget.controller.text;
+          var header = content.substring(0, start);
+          if (header.endsWith('\n')) {
             header = header.substring(0, header.length - 1);
           }
-          String tail = content.substring(start, content.length);
+          var tail = content.substring(start, content.length);
           widget.controller.text = "$header$tail";
           widget.controller.selection = EditUtils.createTextSelection(header);
         }

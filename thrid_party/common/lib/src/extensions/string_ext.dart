@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
@@ -18,7 +17,7 @@ extension StringExt on String? {
   ///有值
   bool get isNotNullAndEmpty => this != null && this!.isNotEmpty;
 
-  String formatter(List<String> _formatters) => sprintf(this!, _formatters);
+  String formatter(List<String> formatters) => sprintf(this!, formatters);
 
   double get secureDouble {
     try {

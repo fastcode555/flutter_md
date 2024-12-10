@@ -39,6 +39,7 @@ class Gs {
         return List<T>.from(obj);
       }
     }
+    return null;
   }
 
   static T? read<T>(String key, [T? defaultValue]) {

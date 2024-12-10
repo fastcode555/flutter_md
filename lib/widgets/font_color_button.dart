@@ -31,7 +31,7 @@ class FontColorButton extends StatelessWidget {
         ),
       ),
       child: IconButton(
-        onPressed: () => notifier?.value = EditActionModel(action: EditActionModel.font, content: "red"),
+        onPressed: () => notifier?.value = EditActionModel(action: EditActionModel.font, content: 'red'),
         icon: const Icon(Icons.format_color_text),
       ),
     );

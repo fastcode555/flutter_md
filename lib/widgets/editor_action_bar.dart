@@ -104,7 +104,7 @@ class _EditorActionBarState extends State<EditorActionBar> {
 class _PanelVisibleWidget extends StatefulWidget {
   final ValueNotifier<EditActionModel?> notifier;
 
-  const _PanelVisibleWidget({super.key, required this.notifier});
+  const _PanelVisibleWidget({required this.notifier});
 
   @override
   __PanelVisibleWidgetState createState() => __PanelVisibleWidgetState();

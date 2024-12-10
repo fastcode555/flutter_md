@@ -30,9 +30,7 @@ typedef AutocompleteOptionToString<T extends Object> = String Function(T option)
 
 class AutoCompleteEx<T extends Object> extends StatefulWidget {
   const AutoCompleteEx({
-    super.key,
-    required this.optionsViewBuilder,
-    required this.optionsBuilder,
+    required this.optionsViewBuilder, required this.optionsBuilder, super.key,
     this.displayStringForOption = defaultStringForOption,
     this.fieldViewBuilder,
     this.focusNode,
@@ -40,13 +38,10 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
     this.textEditingController,
     this.initialValue,
     this.highlightedOptionIndex,
-  })  : assert(displayStringForOption != null),
-        assert(
+  })  : assert(
           fieldViewBuilder != null || (key != null && focusNode != null && textEditingController != null),
           'Pass in a fieldViewBuilder, or otherwise create a separate field and pass in the FocusNode, TextEditingController, and a key. Use the key with RawAutocomplete.onFieldSubmitted.',
         ),
-        assert(optionsBuilder != null),
-        assert(optionsViewBuilder != null),
         assert((focusNode == null) == (textEditingController == null)),
         assert(
           !(textEditingController != null && initialValue != null),
@@ -69,7 +64,7 @@ class AutoCompleteEx<T extends Object> extends StatefulWidget {
   final ValueNotifier<int>? highlightedOptionIndex;
 
   static void onFieldSubmitted<T extends Object>(GlobalKey key) {
-    final _AutoCompleteExState<T> rawAutocomplete = key.currentState! as _AutoCompleteExState<T>;
+    final rawAutocomplete = key.currentState! as _AutoCompleteExState<T>;
     rawAutocomplete._onFieldSubmitted();
   }
 
@@ -109,8 +104,8 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
   }
 
   Future<void> _onChangedField() async {
-    final TextEditingValue value = _textEditingController.value;
-    final Iterable<T> options = await widget.optionsBuilder(
+    final value = _textEditingController.value;
+    final options = await widget.optionsBuilder(
       value,
     );
     _options = options;
@@ -224,20 +219,20 @@ class _AutoCompleteExState<T extends Object> extends State<AutoCompleteEx<T>> {
 
     _floatingOptions?.remove();
     if (_shouldShowOptions) {
-      final OverlayEntry newFloatingOptions = OverlayEntry(
+      final newFloatingOptions = OverlayEntry(
         builder: (BuildContext context) {
           return AutocompleteHighlightedOption(
             highlightIndexNotifier: _highlightedOptionIndex,
             child: Builder(
               builder: (BuildContext context) {
-                print("执行重新绘制");
+                print('执行重新绘制');
                 return widget.optionsViewBuilder(context, _select, _options);
               },
             ),
           );
         },
       );
-      Overlay.of(context, rootOverlay: true)!.insert(newFloatingOptions);
+      Overlay.of(context, rootOverlay: true).insert(newFloatingOptions);
       _floatingOptions = newFloatingOptions;
     } else {
       _floatingOptions = null;
@@ -382,9 +377,7 @@ class AutocompleteEnterOptionIntent extends Intent {
 class AutocompleteHighlightedOption extends InheritedNotifier<ValueNotifier<int>> {
   /// Create an instance of AutocompleteHighlightedOption inherited widget.
   const AutocompleteHighlightedOption({
-    super.key,
-    required ValueNotifier<int> highlightIndexNotifier,
-    required super.child,
+    required ValueNotifier<int> highlightIndexNotifier, required super.child, super.key,
   }) : super(notifier: highlightIndexNotifier);
 
   /// Returns the index of the highlighted option from the closest

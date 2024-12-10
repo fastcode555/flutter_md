@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:characters/characters.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 
@@ -8,26 +7,26 @@ import 'package:flutter/material.dart';
 /// describe:
 
 class EditUtils {
-  static const String _cnNumbers = "零一二三四五六七八九十";
-  static const List<String> _cnIndexUnits = ["十", "百", "千", "万"];
+  static const String _cnNumbers = '零一二三四五六七八九十';
+  static const List<String> _cnIndexUnits = ['十', '百', '千', '万'];
   static final List<RegExp> _cnIndexUnitsRegex = [
     RegExp(r'[零一二三四五六七八九]*十'),
     RegExp(r'[零一二三四五六七八九]*百'),
     RegExp(r'[零一二三四五六七八九]*千'),
     RegExp(r'[零一二三四五六七八九]*万'),
   ];
-  static const String _circleNumbers = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯";
+  static const String _circleNumbers = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯';
 
   static const String _circleNumbers2 = '❶❷❸❹❺❻❼❽❾❿';
   static const List<String> _circleNumbers3 = [
-    "Ⅰ",
-    "Ⅱ",
-    "Ⅲ",
-    "Ⅳ",
-    "Ⅴ",
-    "Ⅵ",
-    "Ⅶ",
-    "Ⅷ",
+    'Ⅰ',
+    'Ⅱ',
+    'Ⅲ',
+    'Ⅳ',
+    'Ⅴ',
+    'Ⅵ',
+    'Ⅶ',
+    'Ⅷ',
     'Ⅸ',
     'Ⅹ',
     'XI',
@@ -38,14 +37,14 @@ class EditUtils {
     'XVI'
   ];
   static const List<String> _circleNumbers4 = [
-    "ⅰ",
-    "ⅱ",
-    "ⅲ",
-    "ⅳ",
-    "ⅴ",
-    "ⅵ",
-    "ⅶ",
-    "ⅷ",
+    'ⅰ',
+    'ⅱ',
+    'ⅲ',
+    'ⅳ',
+    'ⅴ',
+    'ⅵ',
+    'ⅶ',
+    'ⅷ',
     'ⅸ',
     'ⅹ',
     'ⅹⅰ',
@@ -70,7 +69,7 @@ class EditUtils {
   static final RegExp _regexAutoFillSymbol = RegExp(r'[^0-9]\*[0-9]{1,500}');
 
   ///匹配数学公式
-  static final RegExp _mathRegex = RegExp(r"^[（）\(\)0-9.\*\+-\/^]*=");
+  static final RegExp _mathRegex = RegExp(r'^[（）\(\)0-9.\*\+-\/^]*=');
 
   ///判断公式是不是含有结果
   static final RegExp _hasMathResult = RegExp(r'=[0-9.\-]{1,100}');
@@ -116,7 +115,7 @@ class EditUtils {
 
   ///获取匹配到的数学公式
   static String getMatchMath(String content) {
-    RegExpMatch? match = _mathRegex.firstMatch(content);
+    var match = _mathRegex.firstMatch(content);
     return match?.group(0) ?? '';
   }
 
@@ -127,7 +126,7 @@ class EditUtils {
 
   ///获取匹配到的只能符号
   static String getMatchAiSymbol(String content) {
-    RegExpMatch? match = _regexAutoFillSymbol.firstMatch(content);
+    var match = _regexAutoFillSymbol.firstMatch(content);
     return match?.group(0) ?? '';
   }
 
@@ -139,76 +138,76 @@ class EditUtils {
   ///创建选择到的最后的文本
   static TextSelection createTextSelection(String content) {
     return TextSelection.fromPosition(
-      TextPosition(affinity: TextAffinity.downstream, offset: content.length),
+      TextPosition(offset: content.length),
     );
   }
 
   ///根据给定的位置创建选中位置
   static TextSelection lengthSelection(int start) {
     return TextSelection.fromPosition(
-      TextPosition(affinity: TextAffinity.downstream, offset: start),
+      TextPosition(offset: start),
     );
   }
 
   ///计算这个数学公式的结果
   static String singleMath(String content) {
-    if (content.contains("=")) {
-      content = content.replaceAll("=", '');
-      content = content.replaceAll("+-", '-');
+    if (content.contains('=')) {
+      content = content.replaceAll('=', '');
+      content = content.replaceAll('+-', '-');
     }
     RegExp regex;
     if (content.contains('^')) {
       regex = RegExp(r'[0-9.]*\^[0-9.]*');
       var matchs = regex.allMatches(content);
-      for (RegExpMatch match in matchs) {
-        String? matchString = match.group(0);
-        List<String>? splits = matchString?.split("^");
+      for (var match in matchs) {
+        var matchString = match.group(0);
+        var splits = matchString?.split('^');
         if (splits != null) {
-          String value = pow(splits[0].secureNum, splits[1].secureNum).toString();
+          var value = pow(splits[0].secureNum, splits[1].secureNum).toString();
           content = content.replaceAll(matchString ?? '', value);
         }
       }
       return singleMath(content);
     }
-    int hasMultiply = content.indexOf("*");
-    int hasDivide = content.indexOf("/");
+    var hasMultiply = content.indexOf('*');
+    var hasDivide = content.indexOf('/');
     if (hasMultiply < hasDivide && hasMultiply > 0 || hasMultiply > 0 && hasDivide < 0) {
       regex = RegExp(r'[0-9.]*\*[0-9.]*');
-      String? matchString = regex.firstMatch(content)?.group(0);
-      List<String>? splits = matchString?.split("*");
+      var matchString = regex.firstMatch(content)?.group(0);
+      var splits = matchString?.split('*');
       if (splits != null) {
-        String value = (splits[0].secureNum * splits[1].secureNum).toString();
+        var value = (splits[0].secureNum * splits[1].secureNum).toString();
         content = content.replaceAll(matchString ?? '', value);
         return singleMath(content);
       }
     } else if (hasDivide > 0) {
       regex = RegExp(r'[0-9.]*\/[0-9.]*');
-      String? matchString = regex.firstMatch(content)?.group(0);
-      List<String>? splits = matchString?.split("/");
+      var matchString = regex.firstMatch(content)?.group(0);
+      var splits = matchString?.split('/');
       if (splits != null) {
-        String value = (splits[0].secureNum / splits[1].secureNum).toString();
+        var value = (splits[0].secureNum / splits[1].secureNum).toString();
         content = content.replaceAll(matchString ?? '', value);
         return singleMath(content);
       }
     }
 
-    int hasAdd = content.indexOf("+");
-    int hasReduce = content.indexOf("-");
+    var hasAdd = content.indexOf('+');
+    var hasReduce = content.indexOf('-');
     if (hasAdd < hasReduce && hasAdd > 0 || hasAdd > 0 && hasReduce < 0) {
       regex = RegExp(r'[0-9.]*\+[0-9.]*');
-      String? matchString = regex.firstMatch(content)?.group(0);
-      List<String>? splits = matchString?.split("+");
+      var matchString = regex.firstMatch(content)?.group(0);
+      var splits = matchString?.split('+');
       if (splits != null) {
-        String value = (splits[0].secureNum + splits[1].secureNum).toString();
+        var value = (splits[0].secureNum + splits[1].secureNum).toString();
         content = content.replaceAll(matchString ?? '', value);
         return singleMath(content);
       }
     } else if (hasReduce > 0) {
       regex = RegExp(r'[0-9.]*\-[0-9.]*');
-      String? matchString = regex.firstMatch(content)?.group(0);
-      List<String>? splits = matchString?.split("-");
+      var matchString = regex.firstMatch(content)?.group(0);
+      var splits = matchString?.split('-');
       if (splits != null) {
-        String value = (splits[0].secureNum - splits[1].secureNum).toString();
+        var value = (splits[0].secureNum - splits[1].secureNum).toString();
         content = content.replaceAll(matchString ?? '', value);
         return singleMath(content);
       }
@@ -218,16 +217,16 @@ class EditUtils {
 
   static String caculateMath2(String content) {
     //替换掉中文的特舒符号
-    if (content.contains("（") || content.contains('）')) {
-      content = content.replaceAll('（', '(').replaceAll("）", ')').replaceAll(" ", "").trim();
+    if (content.contains('（') || content.contains('）')) {
+      content = content.replaceAll('（', '(').replaceAll('）', ')').replaceAll(' ', '').trim();
     }
 
-    if (content.contains("(")) {
-      int start = content.lastIndexOf("(");
-      String tail = content.substring(start, content.length);
-      int end = tail.indexOf(')');
-      String single = tail.substring(1, end);
-      String result = EditUtils.singleMath(single);
+    if (content.contains('(')) {
+      var start = content.lastIndexOf('(');
+      var tail = content.substring(start, content.length);
+      var end = tail.indexOf(')');
+      var single = tail.substring(1, end);
+      var result = EditUtils.singleMath(single);
       content = content.replaceAll('($single)', result);
       return caculateMath2(content);
     }
@@ -239,7 +238,7 @@ class EditUtils {
   ///处理特舒符号类型
   static String addSpecialNum(String cnNumber, {int step = 1}) {
     cnNumber = cnNumber.trim();
-    int index = _circleNumbers.indexOf(cnNumber) + 1;
+    var index = _circleNumbers.indexOf(cnNumber) + 1;
     if (index < _circleNumbers.length) {
       return _circleNumbers[index];
     }
@@ -248,7 +247,7 @@ class EditUtils {
 
   static String addSpecialNum2(String cnNumber, {int step = 1}) {
     cnNumber = cnNumber.trim();
-    int index = _circleNumbers2.indexOf(cnNumber) + 1;
+    var index = _circleNumbers2.indexOf(cnNumber) + 1;
     if (index < _circleNumbers2.length) {
       return _circleNumbers2[index];
     }
@@ -257,7 +256,7 @@ class EditUtils {
 
   static String addSpecialNum3(String cnNumber, {int step = 1}) {
     cnNumber = cnNumber.trim();
-    int index = _circleNumbers3.indexOf(cnNumber) + 1;
+    var index = _circleNumbers3.indexOf(cnNumber) + 1;
     if (index < _circleNumbers3.length) {
       return _circleNumbers3[index];
     }
@@ -266,7 +265,7 @@ class EditUtils {
 
   static String addSpecialNum4(String cnNumber, {int step = 1}) {
     cnNumber = cnNumber.trim();
-    int index = _circleNumbers4.indexOf(cnNumber) + 1;
+    var index = _circleNumbers4.indexOf(cnNumber) + 1;
     if (index < _circleNumbers4.length) {
       return _circleNumbers4[index];
     }
@@ -275,32 +274,32 @@ class EditUtils {
 
   //递增数字
   static String addNum(String cnNumber, {int step = 1}) {
-    int value = _cnNum2Number(cnNumber) + step;
+    var value = _cnNum2Number(cnNumber) + step;
     return _num2CnNumber(value);
   }
 
   ///阿拉伯数字转中文数字
   static String _num2CnNumber(int value) {
-    String number = '$value';
-    List<String> nums = number.characters.toList().reversed.toList();
-    String cnNumber = '';
+    var number = '$value';
+    var nums = number.characters.toList().reversed.toList();
+    var cnNumber = '';
     if (value < 10) return _cnNumbers[value];
 
-    for (int i = 0; i < nums.length; i++) {
-      int num = nums[i].secureInt;
-      String cnDig = _cnNumbers[num];
+    for (var i = 0; i < nums.length; i++) {
+      var num = nums[i].secureInt;
+      var cnDig = _cnNumbers[num];
       if (i == 0 && num != 0) {
         cnNumber = cnDig;
       } else if (i == 1) {
         if (num == 1 && value < 20) {
-          cnNumber = "十$cnNumber";
+          cnNumber = '十$cnNumber';
         } else {
           cnNumber = "$cnDig${num != 0 ? '十' : ''}$cnNumber";
         }
       } else if (i == 2) {
         cnNumber = "$cnDig${num != 0 ? '百' : ''}$cnNumber";
       } else if (i == 3) {
-        cnNumber = "$cnDig千$cnNumber";
+        cnNumber = '$cnDig千$cnNumber';
       }
     }
     cnNumber = _replaceEndZero(cnNumber);
@@ -309,12 +308,12 @@ class EditUtils {
 
   ///替换掉末尾的零
   static _replaceEndZero(String cnNumber) {
-    if (cnNumber.endsWith("零")) {
+    if (cnNumber.endsWith('零')) {
       cnNumber = cnNumber.substring(0, cnNumber.length - 1);
       return _replaceEndZero(cnNumber);
     }
-    if (cnNumber.contains("零零")) {
-      cnNumber = cnNumber.replaceAll("零零", "零");
+    if (cnNumber.contains('零零')) {
+      cnNumber = cnNumber.replaceAll('零零', '零');
       return _replaceEndZero(cnNumber);
     }
     return cnNumber;
@@ -326,12 +325,12 @@ class EditUtils {
     if (cnNumber.length == 1) {
       return _cnNumbers.indexOf(cnNumber);
     }
-    int total = 0;
-    for (int i = 0; i < _cnIndexUnitsRegex.length; i++) {
-      RegExp regex = _cnIndexUnitsRegex[i];
-      String unit = _cnIndexUnits[i];
-      String? value = regex.firstMatch(cnNumber)?.group(0)?.replaceAll(unit, '').replaceAll("零", "").trim();
-      if (cnNumber.startsWith("十") && cnNumber.length == 2) {
+    var total = 0;
+    for (var i = 0; i < _cnIndexUnitsRegex.length; i++) {
+      var regex = _cnIndexUnitsRegex[i];
+      var unit = _cnIndexUnits[i];
+      var value = regex.firstMatch(cnNumber)?.group(0)?.replaceAll(unit, '').replaceAll('零', '').trim();
+      if (cnNumber.startsWith('十') && cnNumber.length == 2) {
         total = 10;
       } else if (value != null) {
         total += _cnNumbers.indexOf(value) * (pow(10, i + 1).toInt());
@@ -344,7 +343,7 @@ class EditUtils {
   }
 
   static bool _endWithUnit(String content) {
-    for (String unit in _cnIndexUnits) {
+    for (var unit in _cnIndexUnits) {
       if (content.endsWith(unit)) {
         return true;
       }

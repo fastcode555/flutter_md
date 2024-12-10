@@ -16,13 +16,13 @@ class SpecialCaretWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildList("①②③④⑤⑥⑦⑧⑨⑩"),
+            _buildList('①②③④⑤⑥⑦⑧⑨⑩'),
             _buildList('❶❷❸❹❺❻❼❽❾❿'),
             _buildLists(
-              ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ", 'Ⅸ', 'Ⅹ'],
+              ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ'],
             ),
             _buildLists(
-              ["ⅰ", "ⅱ", "ⅲ", "ⅳ", "ⅴ", "ⅵ", "ⅶ", "ⅷ", 'ⅸ', 'ⅹ'],
+              ['ⅰ', 'ⅱ', 'ⅲ', 'ⅳ', 'ⅴ', 'ⅵ', 'ⅶ', 'ⅷ', 'ⅸ', 'ⅹ'],
             ),
           ],
         ),
@@ -32,9 +32,9 @@ class SpecialCaretWidget extends StatelessWidget {
 
   Widget _buildLists(List<String> strings) {
     List<Widget> buildItem() {
-      List<Widget> items = [];
-      for (int i = 0; i < strings.length; i++) {
-        String item = strings[i];
+      var items = <Widget>[];
+      for (var i = 0; i < strings.length; i++) {
+        var item = strings[i];
         items.add(_buildChild(item));
       }
       return items;
@@ -45,9 +45,9 @@ class SpecialCaretWidget extends StatelessWidget {
 
   Widget _buildList(String strings) {
     List<Widget> buildItem() {
-      List<Widget> items = [];
-      for (int i = 0; i < strings.length; i++) {
-        String item = strings[i];
+      var items = <Widget>[];
+      for (var i = 0; i < strings.length; i++) {
+        var item = strings[i];
         items.add(_buildChild(item));
       }
       return items;

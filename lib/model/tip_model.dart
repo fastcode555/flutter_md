@@ -12,33 +12,33 @@ class TipModel {
   ///选中文本之后开始的位置
   int? start;
   static List<TipModel> defaultMds = [
-    TipModel.df("# ", 'h1', "H1"),
-    TipModel.df("## ", 'h2', "H2"),
-    TipModel.df("### ", 'h3', "H3"),
-    TipModel.df("#### ", 'h4', "H4"),
-    TipModel.df("##### ", 'h5', "H5"),
-    TipModel.df("###### ", 'h6', "H6"),
-    TipModel.df("****", 'bold', "Bold", start: 2),
-    TipModel.df("====", '', "Mark", start: 2),
-    TipModel.df("~~~~", 'delete', "Delete", start: 2),
-    TipModel.df("---", '-', ''),
-    TipModel.df("[]()", 'link', 'Insert Link', start: 1),
-    TipModel.df("- [ ] ", '', 'CheckBox false', start: 6),
-    TipModel.df("- [x] ", '', 'CheckBox true', start: 6),
-    TipModel.df("![Alt]()", 'img', 'Insert Image', start: 7),
-    TipModel.df("|\n-|-", '', "Table 2", start: 0),
-    TipModel.df("||\n-|-|-", '', "Table 3", start: 0),
-    TipModel.df("|||\n-|-|-|-", '', "Table 4", start: 0),
-    TipModel.df("||||\n-|-|-|-|-", '', "Table 5", start: 0),
-    TipModel.df("|||||\n-|-|-|-|-|-", '', "Table 6", start: 0),
-    TipModel.df("||||||\n-|-|-|-|-|-|-", '', "Table 7", start: 0),
-    TipModel.df("|||||||\n-|-|-|-|-|-|-|-", '', "Table 8", start: 0),
-    TipModel.df("||||||||\n-|-|-|-|-|-|-|-|-", '', "Table 9", start: 0),
-    TipModel.df("<u></u>", 'u', "Underline", start: 3),
-    TipModel.df("<br/>", 'br', "NewLine", start: 5),
-    TipModel.df("<kbd></kbd>", 'kbd', "KBD", start: 5),
-    TipModel.df("<font color=red></font>", 'font', "Font", start: 16),
-    TipModel.df("<img src=\"\"/>", 'img', 'Insert Html Image', start: 10),
+    TipModel.df('# ', 'h1', 'H1'),
+    TipModel.df('## ', 'h2', 'H2'),
+    TipModel.df('### ', 'h3', 'H3'),
+    TipModel.df('#### ', 'h4', 'H4'),
+    TipModel.df('##### ', 'h5', 'H5'),
+    TipModel.df('###### ', 'h6', 'H6'),
+    TipModel.df('****', 'bold', 'Bold', start: 2),
+    TipModel.df('====', '', 'Mark', start: 2),
+    TipModel.df('~~~~', 'delete', 'Delete', start: 2),
+    TipModel.df('---', '-', ''),
+    TipModel.df('[]()', 'link', 'Insert Link', start: 1),
+    TipModel.df('- [ ] ', '', 'CheckBox false', start: 6),
+    TipModel.df('- [x] ', '', 'CheckBox true', start: 6),
+    TipModel.df('![Alt]()', 'img', 'Insert Image', start: 7),
+    TipModel.df('|\n-|-', '', 'Table 2', start: 0),
+    TipModel.df('||\n-|-|-', '', 'Table 3', start: 0),
+    TipModel.df('|||\n-|-|-|-', '', 'Table 4', start: 0),
+    TipModel.df('||||\n-|-|-|-|-', '', 'Table 5', start: 0),
+    TipModel.df('|||||\n-|-|-|-|-|-', '', 'Table 6', start: 0),
+    TipModel.df('||||||\n-|-|-|-|-|-|-', '', 'Table 7', start: 0),
+    TipModel.df('|||||||\n-|-|-|-|-|-|-|-', '', 'Table 8', start: 0),
+    TipModel.df('||||||||\n-|-|-|-|-|-|-|-|-', '', 'Table 9', start: 0),
+    TipModel.df('<u></u>', 'u', 'Underline', start: 3),
+    TipModel.df('<br/>', 'br', 'NewLine', start: 5),
+    TipModel.df('<kbd></kbd>', 'kbd', 'KBD', start: 5),
+    TipModel.df('<font color=red></font>', 'font', 'Font', start: 16),
+    TipModel.df('<img src=\"\"/>', 'img', 'Insert Html Image', start: 10),
   ];
 
   TipModel({
@@ -72,7 +72,7 @@ class TipModel {
   static TipModel toBean(Map json) => TipModel.fromJson(json);
 
   @override
-  Map<String, dynamic> primaryKeyAndValue() => {"id": id};
+  Map<String, dynamic> primaryKeyAndValue() => {'id': id};
 
   @override
   int get hashCode => id?.hashCode ?? super.hashCode;

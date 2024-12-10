@@ -7,11 +7,11 @@ class CommonSyntax extends md.TextSyntax {
   final RegExp regExp;
 
   CommonSyntax(
-    String pattern,
+    super.pattern,
     String contentPattern,
     String sub,
   )   : regExp = RegExp(contentPattern),
-        super(pattern, sub: sub);
+        super(sub: sub);
 
   @override
   bool onMatch(md.InlineParser parser, Match match) {

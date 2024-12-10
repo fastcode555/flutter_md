@@ -17,8 +17,8 @@ extension ListExt<T> on List<T> {
   }
 
   T? itemWhere(bool Function(T element) test) {
-    var _indexWhere = indexWhere(test);
-    return _indexWhere != -1 ? this[_indexWhere] : null;
+    var finalIndex = indexWhere(test);
+    return finalIndex != -1 ? this[finalIndex] : null;
   }
 
   T? safetyItem(int index) {

@@ -83,9 +83,9 @@ class FileUtils {
     // Store the picture in the temp directory.
     // Find the temp directory using the `path_provider` plugin.
     String path = "${(await getAppDirectory()).path}$dirName/";
-    Directory _dir = Directory(path);
-    if (!_dir.existsSync()) _dir.createSync();
-    final file = File('${_dir.path}${name ?? DateTime.now().millisecond}.jpg');
+    Directory dir = Directory(path);
+    if (!dir.existsSync()) dir.createSync();
+    final file = File('${dir.path}${name ?? DateTime.now().millisecond}.jpg');
     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
     return file;
   }
@@ -95,9 +95,9 @@ class FileUtils {
     // Store the picture in the temp directory.
     // Find the temp directory using the `path_provider` plugin.
     String path = "${(await getAppDirectory()).path}$dirName/";
-    Directory _dir = Directory(path);
-    if (!_dir.existsSync()) _dir.createSync();
-    final file = File('${_dir.path}${name ?? DateTime.now().millisecond}.jpg');
+    Directory dir = Directory(path);
+    if (!dir.existsSync()) dir.createSync();
+    final file = File('${dir.path}${name ?? DateTime.now().millisecond}.jpg');
     await file.writeAsBytes(unit8list);
     return file;
   }
