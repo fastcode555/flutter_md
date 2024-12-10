@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_luban/flutter_luban.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -35,40 +34,6 @@ extension FileExt on File {
     }
     String result = size.toStringAsFixed(2);
     return '$result${unitArr[index]}';
-  }
-
-  Future<File?> compress() async {
-    var dir = await FileUtils.getAppDirectory();
-    var targetPath = "${dir.path}${DateTime.now().millisecondsSinceEpoch}${_getFomatName(this)}";
-    CompressObject compressObject = CompressObject(
-      imageFile: this,
-      //image
-      path: targetPath,
-      //compress to path
-      quality: 85,
-      //first compress quality, default 80
-      step: 9,
-      //compress quality step, The bigger the fast, Smaller is more accurate, default 6
-      mode: CompressMode.LARGE2SMALL, //default AUTO
-    );
-    targetPath = await Luban.compressImage(compressObject) ?? '';
-    return File(targetPath);
-  }
-
-  String _getFomatName(File file) {
-    var path = file.path.toLowerCase();
-    if (path.endsWith(".jpeg")) {
-      return ".jpeg";
-    } else if (path.endsWith(".jpg")) {
-      return ".jpg";
-    } else if (path.endsWith(".png")) {
-      return ".png";
-    } else if (path.endsWith(".heic")) {
-      return ".heic";
-    } else if (path.endsWith(".webp")) {
-      return ".webp";
-    }
-    return ".jpeg";
   }
 }
 

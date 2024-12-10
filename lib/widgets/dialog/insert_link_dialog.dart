@@ -70,7 +70,7 @@ class _InputField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       style: const TextStyle(),
       autoFocus: true,
-      hintStyle: Theme.of(context).textTheme.bodyText1,
+      hintStyle: Theme.of(context).textTheme.bodyLarge,
       decoration: BoxDecoration(
         border: Border.all(color: context.primaryColor),
         borderRadius: BorderRadius.circular(8),

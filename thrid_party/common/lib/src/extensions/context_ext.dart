@@ -23,10 +23,10 @@ extension ContextExt on BuildContext {
   Color get primaryColorLight => Theme.of(this).primaryColorLight;
 
   //系统默认字体颜色
-  TextStyle? get textStyle => Theme.of(this).textTheme.bodyText2;
+  TextStyle? get textStyle => Theme.of(this).textTheme.bodyMedium;
 
   //系统加粗字体颜色
-  TextStyle? get textBoldStyle => Theme.of(this).textTheme.bodyText1;
+  TextStyle? get textBoldStyle => Theme.of(this).textTheme.bodyLarge;
 
   //导航栏高度,AppBarHeight
   double get appBarHeight => kToolbarHeight;

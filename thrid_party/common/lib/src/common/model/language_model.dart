@@ -16,7 +16,7 @@ class LanguageModel {
     this.titleId,
     this.languageCode,
     this.countryCode, {
-    this.isSelected: false,
+    this.isSelected = false,
     this.flag,
   });
 
@@ -24,7 +24,7 @@ class LanguageModel {
     this.titleId, {
     this.languageCode = '',
     this.countryCode = '',
-    this.isSelected: false,
+    this.isSelected = false,
     this.flag,
   });
 

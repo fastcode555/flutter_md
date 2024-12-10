@@ -20,9 +20,14 @@ class Themes {
         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColor)),
       ),
       dividerColor: themeColor,
+      dividerTheme: const DividerThemeData(
+        color: Colors.grey, // 设置全局 Divider 的颜色
+        thickness: 1.0,     // 设置 Divider 的厚度
+        space: 16.0,        // 设置 Divider 上下的间距
+      ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          primary: themeColor,
+          iconColor: themeColor,
           textStyle: TextStyle(color: themeColor),
         ),
       ),
@@ -49,7 +54,6 @@ class Themes {
           backgroundColor: MaterialStateProperty.all<Color>(themeColor),
         ),
       ),
-      toggleableActiveColor: themeColor,
     );
   }
 }

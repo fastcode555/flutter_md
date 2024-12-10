@@ -7,7 +7,7 @@ class MarkdownPage extends StatefulWidget {
   final File? file;
   final String? data;
 
-  const MarkdownPage({this.file, this.data, Key? key}) : super(key: key);
+  const MarkdownPage({this.file, this.data, super.key});
 
   @override
   _MarkdownPageState createState() => _MarkdownPageState();

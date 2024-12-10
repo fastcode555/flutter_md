@@ -68,7 +68,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                   _items.add('NewFile$count.md');
                   setState(() {});
                 },
-                icon: Image.asset(R.icNewFile, color: Colors.red),
+                icon: Image.asset(R.icNewFile, color: Colors.red, width: 25, height: 25),
               ),
               IconButton(
                 tooltip: Ids.openFile.tr,
@@ -93,7 +93,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                   child: TabBar(
                     tabs: _items.mapWidget((index, t) => _buildTab(index, t, context)),
                     controller: _controller,
+                    tabAlignment: TabAlignment.start,
                     isScrollable: true,
+                    dividerColor: Colors.transparent,
                     unselectedLabelColor: context.primaryColor.withOpacity(0.5),
                     labelColor: context.primaryColor,
                   ),
