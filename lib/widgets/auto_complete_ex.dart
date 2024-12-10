@@ -30,7 +30,9 @@ typedef AutocompleteOptionToString<T extends Object> = String Function(T option)
 
 class AutoCompleteEx<T extends Object> extends StatefulWidget {
   const AutoCompleteEx({
-    required this.optionsViewBuilder, required this.optionsBuilder, super.key,
+    required this.optionsViewBuilder,
+    required this.optionsBuilder,
+    super.key,
     this.displayStringForOption = defaultStringForOption,
     this.fieldViewBuilder,
     this.focusNode,
@@ -377,7 +379,9 @@ class AutocompleteEnterOptionIntent extends Intent {
 class AutocompleteHighlightedOption extends InheritedNotifier<ValueNotifier<int>> {
   /// Create an instance of AutocompleteHighlightedOption inherited widget.
   const AutocompleteHighlightedOption({
-    required ValueNotifier<int> highlightIndexNotifier, required super.child, super.key,
+    required ValueNotifier<int> highlightIndexNotifier,
+    required super.child,
+    super.key,
   }) : super(notifier: highlightIndexNotifier);
 
   /// Returns the index of the highlighted option from the closest

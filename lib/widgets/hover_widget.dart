@@ -10,7 +10,8 @@ class HoverWidget extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
 
   const HoverWidget.animation({
-    required this.builder, Key? key,
+    required this.builder,
+    Key? key,
     this.decoration,
     this.hoverDecoration,
     this.padding,
@@ -18,7 +19,8 @@ class HoverWidget extends StatefulWidget {
         super(key: key);
 
   const HoverWidget({
-    required this.builder, Key? key,
+    required this.builder,
+    Key? key,
     this.decoration,
     this.hoverDecoration,
     this.padding,

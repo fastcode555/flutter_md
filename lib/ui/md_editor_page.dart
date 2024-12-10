@@ -57,9 +57,7 @@ class _MdEditorPageState extends State<MdEditorPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EditorActionBar(
-          notifier: _actionNotifier,
-        ),
+        EditorActionBar(notifier: _actionNotifier),
         Expanded(
           child: Row(
             children: [

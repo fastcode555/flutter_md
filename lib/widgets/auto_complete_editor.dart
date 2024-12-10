@@ -28,7 +28,8 @@ class AutoCompleteEditor extends StatefulWidget {
   const AutoCompleteEditor({
     required this.controller,
     required this.focusNode,
-    required this.highlightedOptionIndex, this.maxShowCount = 15,
+    required this.highlightedOptionIndex,
+    this.maxShowCount = 15,
     this.itemHeight = 40.0,
     this.hintWidth = 300,
     this.hintHeight = 300,

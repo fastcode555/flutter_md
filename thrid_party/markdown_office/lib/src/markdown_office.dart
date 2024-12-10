@@ -70,6 +70,12 @@ class _MarkdownOfficeState extends State<MarkdownOffice> {
           border: Border(left: BorderSide(color: context.primaryColor, width: 3)),
           color: context.primaryColor.withOpacity(0.05),
         ),
+        codeblockDecoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        codeblockPadding: const EdgeInsets.all(16),
         horizontalRuleDecoration: BoxDecoration(
           border: Border(
             top: BorderSide(width: 1.0, color: Theme.of(context).dividerColor),

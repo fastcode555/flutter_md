@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_md/res/strings.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 
 import '../model/edit_action_model.dart';
 import '../res/r.dart';
@@ -59,7 +60,7 @@ class _EditorActionBarState extends State<EditorActionBar> {
               IconButton(
                 tooltip: Ids.strikeThrough.tr,
                 onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.lineThrough),
-                icon: Image.asset(R.icTextDelete, color: context.primaryColor),
+                icon: R.icTextDelete.asset.grey700.s24.mk,
               ),
               FontColorButton(notifier: widget.notifier),
               IconButton(
@@ -80,7 +81,7 @@ class _EditorActionBarState extends State<EditorActionBar> {
               IconButton(
                 tooltip: Ids.newline.tr,
                 onPressed: () => widget.notifier.value = EditActionModel(action: EditActionModel.newLine),
-                icon: Image.asset(R.icChangeLine, color: context.primaryColor),
+                icon: R.icChangeLine.asset.s24.grey700.mk,
               ),
               CaretButton(
                 onTap: (String value) {
@@ -126,7 +127,7 @@ class __PanelVisibleWidgetState extends State<_PanelVisibleWidget> {
               _isEdit = true;
               setState(() {});
             },
-            icon: Image.asset(R.icMdSplit, color: context.primaryColor),
+            icon: R.icMdSplit.asset.grey700.s24.mk,
           ),
         if (_isEdit)
           IconButton(
@@ -136,7 +137,7 @@ class __PanelVisibleWidgetState extends State<_PanelVisibleWidget> {
               _isEdit = false;
               setState(() {});
             },
-            icon: Image.asset(R.icMdEye, color: context.primaryColor),
+            icon: R.icMdEye.asset.s24.grey700.mk,
           ),
       ],
     );

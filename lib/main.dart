@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_md/themes.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'app_pages.dart';
@@ -18,32 +19,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      scrollBehavior: MyCustomScrollBehavior(),
-      initialRoute: AppPages.initial,
-      getPages: AppPages.routes,
-      defaultTransition: Transition.cupertino,
-      unknownRoute: AppPages.unknownRoute,
-      locale: LanguageUtil.initLanguage().toLocale(),
-      theme: Themes.theme(),
-      darkTheme: Themes.theme(true),
-      translations: TranslationService(),
-      builder: (ctx, child) {
-        return OKToast(
-          backgroundColor: Colors.black54,
-          textPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-          radius: 20.0,
-          position: ToastPosition.bottom,
-          child: GestureDetector(
-            child: child,
-            onTap: () {
-              var currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-                FocusManager.instance.primaryFocus?.unfocus();
-              }
-            },
-          ),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          scrollBehavior: MyCustomScrollBehavior(),
+          initialRoute: AppPages.initial,
+          getPages: AppPages.routes,
+          defaultTransition: Transition.cupertino,
+          unknownRoute: AppPages.unknownRoute,
+          locale: LanguageUtil.initLanguage().toLocale(),
+          theme: Themes.theme(),
+          darkTheme: Themes.theme(true),
+          translations: TranslationService(),
+          builder: (ctx, child) {
+            return OKToast(
+              backgroundColor: Colors.black54,
+              textPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              radius: 20.0,
+              position: ToastPosition.bottom,
+              child: GestureDetector(
+                child: child,
+                onTap: () {
+                  var currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
+                },
+              ),
+            );
+          },
         );
       },
     );

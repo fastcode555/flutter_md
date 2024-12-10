@@ -20,10 +20,10 @@ class Themes {
         focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColor)),
       ),
       dividerColor: themeColor,
-      dividerTheme: const DividerThemeData(
-        color: Colors.grey, // 设置全局 Divider 的颜色
-        thickness: 1.0,     // 设置 Divider 的厚度
-        space: 16.0,        // 设置 Divider 上下的间距
+      dividerTheme: DividerThemeData(
+        color: Colors.grey[300], // 设置全局 Divider 的颜色
+        thickness: 1.0, // 设置 Divider 的厚度
+        space: 16.0, // 设置 Divider 上下的间距
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
@@ -31,7 +31,7 @@ class Themes {
           textStyle: TextStyle(color: themeColor),
         ),
       ),
-      iconTheme: IconThemeData(color: themeColor),
+      iconTheme: IconThemeData(color: Colors.grey.shade700),
       textSelectionTheme: TextSelectionThemeData(
         selectionColor: themeColor.withOpacity(0.5),
         cursorColor: themeColor,

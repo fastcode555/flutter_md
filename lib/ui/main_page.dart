@@ -4,6 +4,7 @@ import 'package:common/common.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_md/res/strings.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 
 import '../res/r.dart';
 import '../widgets/hover_widget.dart';
@@ -58,8 +59,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     return Scaffold(
       body: Column(
         children: [
-          Row(
-            children: [
+          row.children(
+            [
+              const SizedBox(width: 4),
               IconButton(
                 tooltip: Ids.newFile.tr,
                 onPressed: () {
@@ -68,7 +70,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                   _items.add('NewFile$count.md');
                   setState(() {});
                 },
-                icon: Image.asset(R.icNewFile, color: Colors.red, width: 25, height: 25),
+                icon: R.icNewFile.asset.grey700.s24.mk,
               ),
               IconButton(
                 tooltip: Ids.openFile.tr,

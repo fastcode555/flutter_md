@@ -23,7 +23,8 @@ class EditorPanel extends StatefulWidget {
   final FocusNode? focusNode;
 
   const EditorPanel({
-    required this.file, super.key,
+    required this.file,
+    super.key,
     this.autofocus = false,
     this.autoEmpty = false,
     this.controller,

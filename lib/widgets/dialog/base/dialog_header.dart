@@ -11,7 +11,8 @@ class DialogHeader extends StatelessWidget {
   final double width;
 
   const DialogHeader({
-    required this.body, super.key,
+    required this.body,
+    super.key,
     this.lable,
     this.showClose = true,
     this.width = 300,
